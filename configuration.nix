@@ -5,7 +5,7 @@
     [ pkgs.vim
     ];
 
-  environment.darwinConfig = "$HOME/.nixpkgs/flake.nix";
+  environment.darwinConfig = "$HOME/dotfiles/flake.nix";
 
   services = {
     nix-daemon.enable = true;
@@ -31,8 +31,16 @@
     brews = [
       "fzf"
       "archey4"
-      "koekeishiya/formulae/skhd"
-      "koekeishiya/formulae/yabai"
+      {
+        name = "koekeishiya/formulae/skhd";
+        start_service = true;
+        restart_service = true;
+      }
+      {
+        name = "koekeishiya/formulae/yabai";
+        start_service = true;
+        restart_service = true;
+      }
     ];
     taps = [
       "homebrew/bundle"
@@ -50,6 +58,7 @@
       "kitty"
       "spotify"
       "visual-studio-code"
+      "1password"
     ];
   };
 
@@ -70,20 +79,25 @@
         autohide-delay = 0.0;
         autohide-time-modifier = 0.15;
       };
+      NSGlobalDomain = {
+        InitialKeyRepeat = 10;
+        KeyRepeat = 1;
+        ApplePressAndHoldEnabled = false;
+      };
     };
   };
 
-  # system.activationScripts.applications.text = pkgs.lib.mkForce (
-  #   ''
-  #     echo "setting up ~/Applications..." >&2
-  #     rm -rf ~/Applications/Nix\ Apps
-  #     mkdir -p ~/Applications/Nix\ Apps
-  #     for app in $(find ${config.system.build.applications}/Applications -maxdepth 1 -type l); do
-  #       src="$(/usr/bin/stat -f%Y "$app")"
-  #       cp -r "$src" ~/Applications/Nix\ Apps
-  #     done
-  #   ''
-  # );
+  system.activationScripts.applications.text = pkgs.lib.mkForce (
+    ''
+      echo "setting up ~/Applications..." >&2
+      rm -rf ~/Applications/Nix\ Apps
+      mkdir -p ~/Applications/Nix\ Apps
+      for app in $(find ${config.system.build.applications}/Applications -maxdepth 1 -type l); do
+        src="$(/usr/bin/stat -f%Y "$app")"
+        cp -r "$src" ~/Applications/Nix\ Apps
+      done
+    ''
+  );
 
   documentation = {
     enable = false;

@@ -2,7 +2,7 @@ set termguicolors
 set noshowmode
 set wildmenu
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
-set ttyfast
+" set ttyfast
 " set lazyredraw
 set nohlsearch
 set tabstop=2
@@ -42,7 +42,7 @@ endfunc
 
 au BufNewFile,BufRead *.ts setlocal filetype=typescript
 au BufNewFile,BufRead *.tsx setlocal filetype=typescriptreact
-" autocmd FileType typescript JsPreTmpl
+autocmd FileType typescript JsPreTmpl
 
 " autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 " autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear

@@ -1,4 +1,4 @@
-{ nixpkgs, inputs, home-manager, user, pkgs, nil, system, lib, config, hm, ... }:
+{ nixpkgs, inputs, home-manager, user, pkgs, nil, system, lib, config, hm, ghc-version, ... }:
 {
   home-manager = {
     useGlobalPkgs = true;
@@ -6,19 +6,21 @@
     users.${user} = { pkgs, ... }: {
       imports =
         [ ./packages/neovim
+          ./packages/kitty
           ./packages/tmux
+          ./packages/yabai
         ];
       home.stateVersion = "22.05";
       home.packages =
         [ # Starship terminal prompt
           (import ./packages/starship.nix { inherit pkgs; })
           # Glasgow Haskell Compiler
-          pkgs.haskell.compiler.ghc924
+          pkgs.haskell.compiler."ghc${ghc-version}"
           # Haskell Language Server
-          (pkgs.haskell-language-server.overrideAttrs (p: {
-            doCheck = false;
-            supportedGhcVersions = [ "884" "924" ];
-          }))
+          pkgs.haskell.packages."ghc${ghc-version}".haskell-language-server
+          pkgs.ghcid
+          pkgs.stack
+          pkgs.haskellPackages.cabal-install
           # Nix Language Server
           nil.packages.${system}.default
           # exa (ls replacement)
@@ -26,11 +28,14 @@
           pkgs.gnupg
           pkgs.gh
           pkgs.fzf
-          pkgs.nodejs-18_x
+          pkgs.nodejs-19_x
+          pkgs.yarn
           pkgs.bat
           # nix utilities
           pkgs.nix-prefetch-git
           pkgs.nodePackages.pnpm
+          pkgs.woff2
+          pkgs.ruby
         ];
       programs.zsh = {
         enable = true;
@@ -53,6 +58,8 @@
           export LS_COLORS="di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
 
           zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
+
+          export PATH=$PATH:$HOME/.gem/ruby/2.7.0/bin
 
           eval "$(starship init zsh)"
           if [ -n "''${NVIM_LISTEN_ADDRESS+x}" ]; then
