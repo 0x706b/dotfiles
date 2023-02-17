@@ -1,0 +1,246 @@
+{
+  "diagnostic.errorSign": "",
+  "diagnostic.infoSign": "",
+  "diagnostic.warningSign": "",
+  "coc.preferences.messageLevel": "more",
+  "diagnostic-languageserver.mergeConfig": true,
+  "diagnostic-languageserver.trace.server": "verbose",
+  "diagnostic-languageserver.linters": {
+    "eslint_d": {
+      "command": "eslint_d",
+      "rootPatterns": [
+        ".eslintrc",
+        ".eslintrc.js",
+        ".eslintrc.json",
+        ".eslint.config.js"
+      ],
+      "debounce": 100,
+      "args": ["--stdin", "--stdin-filename", "%filepath", "--format", "json"],
+      "sourceName": "eslint",
+      "parseJson": {
+        "errorsRoot": "[0].messages",
+        "line": "line",
+        "column": "column",
+        "endLine": "endLine",
+        "endColumn": "endColumn",
+        "message": "''${message} [''${ruleId}]",
+        "security": "severity"
+      },
+      "securities": ["info", "warning", "error"]
+    }
+  },
+  "diagnostic-languageserver.formatters": {
+    "prettier-eslint_d": {
+      "command": "prettier-eslint_d",
+      "args": ["%filepath"],
+      "rootPatterns": [
+        ".eslintrc",
+        ".eslintrc.js",
+        ".eslintrc.cjs",
+        ".eslintrc.json",
+        ".prettierrc",
+        ".prettierrc.js",
+        ".prettierrc.cjs",
+        ".prettierrc.json"
+      ]
+    },
+    "prettier": {
+      "command": "prettier",
+      "args": ["--stdin-filepath", "%filepath"]
+    },
+    "eslint_d": {
+      "command": "eslint_d",
+      "args": ["--stdin", "--stdin-filename", "%filepath", "--fix-to-stdout"]
+    },
+    "stylua": {
+      "command": "stylua",
+      "args": ["--search-parent-directories", "-"]
+    }
+  },
+  "diagnostic-languageserver.filetypes": {
+    "typescript": "eslint_d",
+    "typescriptreact": "eslint_d"
+  },
+  "diagnostic-languageserver.formatFiletypes": {
+    "typescript": "prettier-eslint_d",
+    "typescriptreact": "prettier-eslint_d",
+    "css": "prettier",
+    "json": "prettier",
+    "lua": "stylua"
+  },
+  "explorer.file.reveal.whenOpen": true,
+  "explorer.floating.border.chars": ["─", "│", "─", "│", "╭", "╮", "╯", "╰"],
+  "explorer.icon.enableNerdfont": true,
+  "explorer.icon.source": "nvim-web-devicons",
+  "explorer.keyMappings.global": {
+    "*": "toggleSelection",
+    ".": "toggleHidden",
+    "<<": "gitStage",
+    "<bs>": "gotoParent",
+    "<cr>": "open",
+    "<esc>": "esc",
+    "<tab>": "actionMenu",
+    ">>": "gitUnstage",
+    "?": "help",
+    "A": "addDirectory",
+    "D": "deleteForever",
+    "E": "open:vsplit",
+    "F": "searchRecursive",
+    "J": ["toggleSelection", "nodeNext"],
+    "K": ["toggleSelection", "nodePrev"],
+    "R": "refresh",
+    "X": "systemExecute",
+    "Y": "copyFilename",
+    "[[": "sourcePrev",
+    "[c": "gitPrev",
+    "[d": "diagnosticPrev",
+    "]]": "sourceNext",
+    "]c": "gitNext",
+    "]d": "diagnosticNext",
+    "a": "addFile",
+    "c": "copyFile",
+    "d": "delete",
+    "e": "open",
+    "f": "search",
+    "gb": "gotoSource:buffer",
+    "gd": "listDrive",
+    "gf": "gotoSource:file",
+    "gh": "collapseRecursive",
+    "gj": "expandableNext",
+    "gk": "expandablePrev",
+    "gl": "expandRecursive",
+    "gp": "preview:labeling",
+    "h": "collapse",
+    "i": false,
+    "j": "nodeNext",
+    "k": "nodePrev",
+    "l": ["expandable?", "expand", "open"],
+    "o": "expandOrCollapse",
+    "p": "pasteFile",
+    "q": "quit",
+    "r": "rename",
+    "s": "open:split",
+    "t": "open:tab",
+    "x": "cutFile",
+    "y": "copyFilepath"
+  },
+  "hover.floatConfig": {
+    "border": true,
+    "maxWidth": 100
+  },
+  "rust.build_on_save": false,
+  "signature.floatConfig": {
+    "border": true,
+    "maxWidth": 100
+  },
+  "diagnostic.floatConfig": {
+    "border": true,
+    "maxWidth": 100
+  },
+  "languageserver": {
+    "nix": {
+      "command": "nil",
+      "filetypes": ["nix"],
+      "rootPatterns": ["flake.nix"]
+    },
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+      "initializationOptions": {
+        "cache": {
+          "directory": "/tmp/ccls"
+        },
+        "clang": {
+          "extraArgs": [
+            "-isystem/usr/local/include",
+            "-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1",
+            "-isystem/Library/Developer/CommandLineTools/usr/lib/clang/13.0.0/include",
+            "-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include",
+            "-isystem/Library/Developer/CommandLineTools/usr/include",
+            "-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
+          ],
+          "resourceDir": "/usr/local/Cellar/llvm/11.0.0/lib/clang/11.0.0/"
+        },
+        "client": {
+          "snippetSupport": true
+        },
+        "highlight": {
+          "lsRanges": true
+        }
+      },
+      "rootPatterns": [".ccls-root", "compile_commands.json"]
+    },
+    "haskell": {
+      "args": ["--lsp"],
+      "command": "haskell-language-server-wrapper",
+      "filetypes": ["hs", "lhs", "haskell", "lhaskell"],
+      "initializationOptions": {
+        "languageServerHaskell": {
+          "hlintOn": true
+        }
+      },
+      "rootPatterns": [
+        "*.cabal",
+        "stack.yaml",
+        "cabal.project",
+        "package.yaml",
+        "hie.yaml"
+      ]
+    },
+    "purescript": {
+      "command": "purescript-language-server",
+      "args": ["--stdio"],
+      "filetypes": ["purescript"],
+      "trace.server": "off",
+      "rootPatterns": ["bower.json", "psc-package.json", "spago.dhall"],
+      "settings": {
+        "purescript": {
+          "addSpagoSources": true,
+          "addNpmPath": true
+        }
+      }
+    }
+  },
+  "list.previewSplitRight": true,
+  "Lua.telemetry.enable": false,
+  "Lua.diagnostics.globals": ["vim"],
+  "notification.maxWidth": 200,
+  "prettier.statusItemText": "",
+  "python.jediEnabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.terminal.activateEnvironment": false,
+  "signature.preferShownAbove": false,
+  "suggest.completionItemKindLabels": {
+    "class": "",
+    "color": "",
+    "constant": "",
+    "default": "",
+    "enum": "",
+    "enumMember": "",
+    "event": "鬒",
+    "field": "",
+    "file": "",
+    "folder": "",
+    "function": "ƒ",
+    "interface": "",
+    "keyword": "",
+    "method": "",
+    "module": "",
+    "operator": "+",
+    "property": "",
+    "reference": "渚",
+    "snippet": "",
+    "struct": "",
+    "text": "",
+    "typeParameter": "",
+    "unit": "",
+    "value": "",
+    "variable": ""
+  },
+  "suggest.noselect": true,
+  "typescript.showUnused": false,
+  "typescript.suggest.completeFunctionCalls": false,
+  "tsserver.maxTsServerMemory": 4000,
+  "tsserver.useLocalTsdk": true,
+  "prettier.eslintIntegration": true
+}

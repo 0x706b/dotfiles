@@ -1,0 +1,24 @@
+background           #121111
+foreground           #bebaba
+cursor               #f54646
+selection_foreground #121111
+selection_background #bebaba
+url_color            #7488AD
+
+color0               #121111
+color8               #5e5959
+color1               #d86363
+color9               #f54646
+color2               #8db18a
+color10              #9c9695
+color3               #d8a763
+color11              #f5ac46
+color4               #81a7bb
+color12              #7488AD
+# color5               #9E80BB
+color5               #AD8ECA
+color13              #D3CFCF
+color6               #9c9695
+color14              #D3CFCF
+color7               #9c9695
+color15              #D3CFCF
