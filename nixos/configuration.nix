@@ -8,6 +8,8 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../modules/i3/configuration.nix
+      ../modules/keyd/configuration.nix
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -52,20 +54,6 @@
     layout = "us";
     xkbVariant = "";
     videoDrivers = [ "nvidia" ];
-    displayManager.lightdm = {
-      enable = true;
-      greeter.enable = true;
-    };
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [
-        dmenu
-        i3status
-        i3lock
-        i3blocks
-      ];
-    };
-    displayManager.defaultSession = "none+i3";
     autoRepeatDelay = 200;
     autoRepeatInterval = 20;
     dpi = 96;

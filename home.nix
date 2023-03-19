@@ -1,4 +1,4 @@
-{ nixpkgs, inputs, home-manager, user, pkgs, nil, system, lib, config, hm, isDarwin, isLinux, ... }:
+{ nixpkgs, inputs, home-manager, user, pkgs, nil, system, lib, config, hm, isDarwin, isLinux, ghc-version, ... }:
 {
   home-manager = {
     useGlobalPkgs = true;
@@ -14,6 +14,7 @@
           ./modules/kitty
           ./modules/tmux
           ./modules/yabai
+          ./modules/vscode
         ] ++ lib.optionals isLinux [ ./nixos/home.nix ]
           ++ lib.optionals isDarwin [ ./darwin/home.nix ];
 
@@ -24,11 +25,11 @@
           starship
           clang
           # (import ./packages/starship.nix { inherit pkgs; })
-          # pkgs.haskell.compiler."ghc${ghc-version}"
-          # pkgs.haskell.packages."ghc${ghc-version}".haskell-language-server
-          # pkgs.ghcid
-          # pkgs.stack
-          # pkgs.haskellPackages.cabal-install
+          pkgs.haskell.compiler."ghc${ghc-version}"
+          pkgs.haskell.packages."ghc${ghc-version}".haskell-language-server
+          pkgs.ghcid
+          pkgs.stack
+          pkgs.haskellPackages.cabal-install
           nil.packages.${system}.default
           exa
           gnupg

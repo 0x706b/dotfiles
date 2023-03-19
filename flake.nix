@@ -33,12 +33,12 @@
     };
     user = "peter";
     hm = home-manager.lib.hm;
-    ghc-version = "924";
+    ghc-version = "944";
   in
   {
     darwinConfigurations.Peters-MBP = darwinSystem {
       specialArgs = {
-        inherit attrs nixpkgsConfig user nil hm;
+        inherit attrs nixpkgsConfig user nil hm ghc-version;
         isDarwin = true;
         isLinux  = false;
         system   = "x86_64-darwin";
@@ -52,7 +52,7 @@
 
     nixosConfigurations.nixos = nixosSystem {
       specialArgs = {
-        inherit attrs user nil hm;
+        inherit attrs user nil hm ghc-version;
         isDarwin = false;
         isLinux  = true;
         system   = "x86_64-linux";

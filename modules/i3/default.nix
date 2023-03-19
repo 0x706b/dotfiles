@@ -5,6 +5,10 @@
     script = "polybar -q -r top & polybar -q -r bottom &";
   };
 
+  programs.rofi = {
+    enable = true;
+  };
+
   xsession.windowManager.i3 = {
     enable = true;
     package = pkgs.i3-gaps;
