@@ -29,6 +29,7 @@ packer.startup(function (use)
   use 'sainnhe/sonokai'
   use 'lifepillar/vim-solarized8'
   use 'Mofiqul/dracula.nvim'
+  use 'ellisonleao/gruvbox.nvim'
 
   use '0x706b/zenburn.nvim'
 
@@ -160,5 +161,7 @@ packer.startup(function (use)
   use {
     "projekt0n/github-nvim-theme"
   }
+
+  use "edgedb/edgedb-vim"
 
 end)

@@ -13,7 +13,8 @@ let g:coc_global_extensions = [
 \  'coc-lists',
 \  'coc-explorer',
 \  'coc-eslint',
-\  '@0x706b/coc-prettier'
+\  'coc-prettier',
+\  'coc-diagnostic'
 \  ]
 
 let g:coc_borderchars = ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
@@ -43,19 +44,20 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! CheckBackSpace() abort
   let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Insert <tab> when previous text is space, refresh completion if not.
 inoremap <silent><expr> <TAB>
-\ coc#pum#visible() ? coc#pum#next(1):
-\ CheckBackSpace() ? "\<Tab>" :
-\ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+  \ coc#pum#visible() ? coc#pum#next(1):
+  \ CheckBackSpace() ? "\<Tab>" :
+  \ coc#refresh()
+
+inoremap <silent><expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 let g:coc_snippet_next = "<TAB>"
 
-imap <expr> <CR> coc#pum#visible() ?
+imap <silent><expr> <CR> coc#pum#visible() ?
     \ "\<C-y>" :
     \ delimitMate#WithinEmptyPair() ?
     \ "\<Plug>delimitMateCR" :

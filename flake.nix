@@ -14,7 +14,12 @@
       url = "github:oxalica/nil";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+      # Neovim 0.9.0
+      inputs.neovim-flake.url = "github:neovim/neovim?dir=contrib&rev=040f1459849ab05b04f6bb1e77b3def16b4c2f2b";
+    };
   };
   outputs = { self, darwin, nixpkgs, home-manager, nil, ... }@inputs:
   let
@@ -28,10 +33,10 @@
     user = "peter";
     system = "x86_64-darwin";
     hm = home-manager.lib.hm;
-    ghc-version = "924";
+    ghc-version = "928";
   in
   {
-    darwinConfigurations.Peters-MBP = darwinSystem {
+    darwinConfigurations.Peters-MacBook-Pro = darwinSystem {
       inherit system;
       specialArgs = { inherit inputs nixpkgsConfig user system nil hm ghc-version; };
       modules = [

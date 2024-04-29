@@ -1,12 +1,16 @@
 lua << EOF
 require'github-theme'.setup({
-  theme_style = "dark_default",
-  overrides = function(c)
-    return {
-      StatusLine = {bg = c.bg_highlight},
-      TabLineSel = {bg = c.bg_visual_selection}
+  groups = {
+    all = {
+      StatusLine = { bg = '#222020' },
+      TabLineSel = { bg = 'sel0' },
+      CursorLine = { bg = 'bg2' }
     }
-  end,
-  transparent = true
+  },
+  options = {
+    transparent = true
+  }
 })
+
+vim.cmd('colorscheme github_dark_default')
 EOF

@@ -13,7 +13,7 @@
       home.stateVersion = "22.05";
       home.packages =
         [ # Starship terminal prompt
-          (import ./packages/starship.nix { inherit pkgs; })
+          pkgs.starship
           # Glasgow Haskell Compiler
           pkgs.haskell.compiler."ghc${ghc-version}"
           # Haskell Language Server
@@ -23,12 +23,12 @@
           pkgs.haskellPackages.cabal-install
           # Nix Language Server
           nil.packages.${system}.default
-          # exa (ls replacement)
-          pkgs.exa
+          # eza (ls replacement)
+          pkgs.eza
           pkgs.gnupg
           pkgs.gh
           pkgs.fzf
-          pkgs.nodejs-19_x
+          pkgs.nodejs_22
           pkgs.yarn
           pkgs.bat
           # nix utilities
@@ -36,6 +36,10 @@
           pkgs.nodePackages.pnpm
           pkgs.woff2
           pkgs.ruby
+          pkgs.kubectl
+          pkgs.minikube
+          pkgs.docker
+          pkgs.edgedb
         ];
       programs.zsh = {
         enable = true;
@@ -43,6 +47,7 @@
           v = "nvim";
           l = "exa -hla --icons";
           lt = "exa -hla --icons --tree --level 2 --git-ignore";
+          prettier-eslint_d = "~/.config/nvim/prettier-eslint_d.sh";
         };
         initExtra = ''
           AUTOLOAD="$HOME/.autoload"
@@ -59,7 +64,7 @@
 
           zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
 
-          export PATH=$PATH:$HOME/.gem/ruby/2.7.0/bin
+          export PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin:$(npm config get prefix)/bin"
 
           eval "$(starship init zsh)"
           if [ -n "''${NVIM_LISTEN_ADDRESS+x}" ]; then

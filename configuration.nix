@@ -31,21 +31,11 @@
     brews = [
       "fzf"
       "archey4"
-      {
-        name = "koekeishiya/formulae/skhd";
-        start_service = true;
-        restart_service = true;
-      }
-      {
-        name = "koekeishiya/formulae/yabai";
-        start_service = true;
-        restart_service = true;
-      }
+      "koekeishiya/formulae/skhd"
+      "koekeishiya/formulae/yabai"
     ];
     taps = [
       "homebrew/bundle"
-      "homebrew/core"
-      "homebrew/cask"
       "homebrew/services"
       "koekeishiya/formulae"
     ];

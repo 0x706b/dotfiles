@@ -1,8 +1,8 @@
 {
-  "diagnostic.errorSign": "",
-  "diagnostic.infoSign": "",
-  "diagnostic.warningSign": "",
-  "coc.preferences.messageLevel": "more",
+  "diagnostic.errorSign": "",
+  "diagnostic.infoSign": "󰋼",
+  "diagnostic.warningSign": "",
+  "suggest.noselect": true,
   "diagnostic-languageserver.mergeConfig": true,
   "diagnostic-languageserver.trace.server": "verbose",
   "diagnostic-languageserver.linters": {
@@ -30,6 +30,20 @@
     }
   },
   "diagnostic-languageserver.formatters": {
+    "prettier-eslint": {
+      "command": "prettier-eslint",
+      "args": ["--stdin", "--stdin-filepath", "%filepath"],
+      "rootPatterns": [
+        ".eslintrc",
+        ".eslintrc.js",
+        ".eslintrc.cjs",
+        ".eslintrc.json",
+        ".prettierrc",
+        ".prettierrc.js",
+        ".prettierrc.cjs",
+        ".prettierrc.json"
+      ]
+    },
     "prettier-eslint_d": {
       "command": "prettier-eslint_d",
       "args": ["%filepath"],
@@ -57,13 +71,9 @@
       "args": ["--search-parent-directories", "-"]
     }
   },
-  "diagnostic-languageserver.filetypes": {
-    "typescript": "eslint_d",
-    "typescriptreact": "eslint_d"
-  },
   "diagnostic-languageserver.formatFiletypes": {
-    "typescript": "prettier-eslint_d",
-    "typescriptreact": "prettier-eslint_d",
+    "typescript": "prettier-eslint",
+    "typescriptreact": "prettier-eslint",
     "css": "prettier",
     "json": "prettier",
     "lua": "stylua"
@@ -237,10 +247,7 @@
     "value": "",
     "variable": ""
   },
-  "suggest.noselect": true,
   "typescript.showUnused": false,
   "typescript.suggest.completeFunctionCalls": false,
-  "tsserver.maxTsServerMemory": 4000,
   "tsserver.useLocalTsdk": true,
-  "prettier.eslintIntegration": true
 }

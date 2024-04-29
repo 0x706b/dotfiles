@@ -9,7 +9,7 @@ rustPlatform.buildRustPackage rec {
     owner = "starship";
     repo = pname;
     rev = "v${version}";
-    sha256 = "0cfwgy2zd3989q4j65xs1kbcnil2nr6jqdcs5fy3xf3n5vqa2jgp";
+    sha256 = "sha256-90mh8C52uD68K5o1LE22gkbL1gy6FyMJTiiN9oV/3DE=";
   };
 
   nativeBuildInputs = [ installShellFiles pkg-config ];
