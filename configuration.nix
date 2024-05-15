@@ -31,6 +31,7 @@
     brews = [
       "fzf"
       "archey4"
+      "lua-language-server"
       "koekeishiya/formulae/skhd"
       "koekeishiya/formulae/yabai"
     ];

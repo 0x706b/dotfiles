@@ -44,6 +44,12 @@ au BufNewFile,BufRead *.ts setlocal filetype=typescript
 au BufNewFile,BufRead *.tsx setlocal filetype=typescriptreact
 autocmd FileType typescript JsPreTmpl
 
+" Highlighted Yank
+augroup highlight_yank
+  autocmd!
+  au TextYankPost * silent! lua vim.highlight.on_yank { higroup='Search', timeout=500 }
+augroup END
+
 " autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 " autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 

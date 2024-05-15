@@ -1,167 +1,212 @@
 local fn = vim.fn
 
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+require("lazy").setup({
+  'wbthomason/packer.nvim',
 
-if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
-  vim.cmd 'packadd packer.nvim'
-end
+  '0x706b/monotone.nvim',
+  'mcchrish/zenbones.nvim',
+  '0x706b/crumbling.nvim',
+  '0x706b/parchment.nvim',
+  'sainnhe/sonokai',
+  'lifepillar/vim-solarized8',
+  'Mofiqul/dracula.nvim',
+  'ellisonleao/gruvbox.nvim',
 
-local packer = require 'packer'
+  '0x706b/zenburn.nvim',
 
-packer.init {
-  display = {
-    open_fn = function()
-      return require("packer.util").float { border = "single" }
-    end,
-    prompt_border = 'rounded'
-  },
-  compile_path = fn.resolve(fn.stdpath('data')..'site/plugin/packer_compiled.lua')
-}
-
-packer.startup(function (use)
-  use 'wbthomason/packer.nvim'
-
-  use '0x706b/monotone.nvim'
-  use 'mcchrish/zenbones.nvim'
-  use '0x706b/crumbling.nvim'
-  use '0x706b/parchment.nvim'
-  use 'sainnhe/sonokai'
-  use 'lifepillar/vim-solarized8'
-  use 'Mofiqul/dracula.nvim'
-  use 'ellisonleao/gruvbox.nvim'
-
-  use '0x706b/zenburn.nvim'
-
-  use {
+  {
     'glepnir/galaxyline.nvim',
     config = function ()
-      require 'config.galaxyline'
+      require("config.galaxyline")
     end,
-    requires = {'kyazdani42/nvim-web-devicons', opt = true}
-  }
+    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true }
+  },
 
-  use 'sainnhe/everforest'
+  'sainnhe/everforest',
 
-  use 'purescript-contrib/purescript-vim'
+  'purescript-contrib/purescript-vim',
 
-  use {
-    'neoclide/coc.nvim',
+  {
+    'neovim/nvim-lspconfig',
     branch = "master",
-    run = 'yarn install --frozen-lockfile',
     config = function ()
-      vim.api.nvim_command('source ~/.config/nvim/config/coc.vim')
+      require('config.lsp')
     end
-  }
+  },
 
-  use {
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    config = function ()
+      require('config.typescript-tools')
+    end
+  },
+
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+      "hrsh7th/cmp-vsnip",
+      "hrsh7th/vim-vsnip",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
+      "onsails/lspkind.nvim"
+    },
+    config = function ()
+      require('config.cmp')
+    end
+  },
+
+  {
+    "nvimdev/lspsaga.nvim",
+    config = function()
+      require('config.lspsaga')
+    end,
+    dependencies = {
+      "nvim-lspconfig",
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-tree/nvim-web-devicons',
+    }
+  },
+
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    lazy = false,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    },
+    config = function()
+      require('config.neotree')
+    end
+  },
+
+  {
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.6',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require("config.telescope")
+    end
+  },
+
+  {
+    "elentok/format-on-save.nvim",
+    config = function()
+      require("config.format-on-save")
+    end
+  },
+
+  {
+    "mrcjkb/haskell-tools.nvim",
+    tag = '3.1.9',
+    config = function()
+      require("config.haskell-tools")
+    end
+  },
+
+  {
     'HerringtonDarkholme/yats.vim',
     config = function ()
       vim.g.yats_host_keyword = 0
     end
-  }
+  },
 
-  use 'othree/yajs.vim'
-  use 'Quramy/vim-js-pretty-template'
-  use 'MaxMEllon/vim-jsx-pretty'
+  'othree/yajs.vim',
+  'Quramy/vim-js-pretty-template',
+  'MaxMEllon/vim-jsx-pretty',
   -- use 'styled-components/vim-styled-components'
 
-  use {
+  {
     'Raimondi/delimitMate',
     config = function ()
       vim.g.delimitMate_expand_cr = 1
       vim.g.delimitMate_expand_space = 1
     end
-  }
+  },
 
 
-  use {
+  {
     'preservim/nerdcommenter',
     config = function ()
       vim.api.nvim_command('source ~/.config/nvim/config/nerdcommenter.vim')
     end
-  }
-  use 'ryanoasis/vim-devicons'
-  use 'tpope/vim-surround'
-  use 'tpope/vim-fugitive'
+  },
+  'ryanoasis/vim-devicons',
+  'tpope/vim-surround',
+  'tpope/vim-fugitive',
 
-  use {
+  {
     'jdhao/better-escape.vim',
     config = function ()
       vim.g.better_escape_interval = 300
       vim.g.better_escape_shortcut = { 'jj' }
     end
-  }
+  },
 
-  use 'junegunn/fzf'
+  'nvim-tree/nvim-web-devicons',
 
-  use {
-    'junegunn/fzf.vim',
-    config = function ()
-      vim.api.nvim_command('source ~/.config/nvim/config/fzf.vim')
-    end
-  }
-
-  use 'antoinemadec/coc-fzf'
-
-  use 'kyazdani42/nvim-web-devicons'
-
-  use {
+  {
     'romgrk/barbar.nvim',
-    requires = 'kyazdani42/nvim-web-devicons',
+    dependencies = 'nvim-tree/nvim-web-devicons',
     config = function()
       require'config.barbar'
     end
-  }
+  },
 
-  use {
+  {
     'lukas-reineke/indent-blankline.nvim',
     config = function()
       require'config.indent-blankline'
     end
-  }
+  },
 
-  use {
+  {
    'easymotion/vim-easymotion',
    config = function ()
      vim.api.nvim_command('source ~/.config/nvim/config/easymotion.vim')
    end
-  }
+  },
 
-  use {
+  {
     'lewis6991/gitsigns.nvim',
-    requires = {
+    dependencies = {
       'nvim-lua/plenary.nvim'
     },
     config = function ()
       require'config.gitsigns'
     end
-  }
+  },
 
-  use {
+  {
     'rktjmp/lush.nvim'
-  }
+  },
 
-  use {
+  {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
-    requires = { 'nvim-treesitter/playground' },
+    dependencies = { 'nvim-treesitter/playground' },
     config = function ()
       require'config.treesitter'
     end
-  }
+  },
 
-  use {
+  {
     "numtostr/FTerm.nvim",
     config = function ()
       require'config.fterm'
     end
-  }
+  },
 
-  use {
+  {
     "projekt0n/github-nvim-theme"
-  }
+  },
 
-  use "edgedb/edgedb-vim"
-
-end)
+  "edgedb/edgedb-vim"
+})
