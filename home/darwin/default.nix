@@ -5,10 +5,11 @@
     useUserPackages = true;
     users.${user} = { pkgs, ... }: {
       imports =
-        [ ./packages/neovim
-          ./packages/kitty
-          ./packages/tmux
-          ./packages/yabai
+        [ ../../packages/neovim
+          ../../packages/kitty
+          ../../packages/tmux
+          ../../packages/yabai
+          ../../packages/vscode-server
         ];
       home.stateVersion = "22.05";
       home.packages =
@@ -41,6 +42,8 @@
           pkgs.minikube
           pkgs.docker
           pkgs.edgedb
+          pkgs.clang
+          pkgs.llvmPackages.libcxxStdenv
         ];
       programs.zsh = {
         enable = true;
@@ -54,9 +57,9 @@
           AUTOLOAD="$HOME/.autoload"
           autoload -U promptinit; promptinit
           # Source all files in $AUTOLOAD having file extension .zsh
-          for file in $AUTOLOAD/*.zsh; do
-              source "$file"
-          done
+          # for file in $AUTOLOAD/*.zsh; do
+          #    source "$file"
+          # done
 
           export CLICOLOR=1
           export CLICOLOR_FORCE=1
@@ -80,7 +83,7 @@
               { name = "plugins/git"; tags = [ "from:oh-my-zsh" ]; }
               { name = "lib/completion"; tags = [ "from:oh-my-zsh" ]; }
               { name = "lib/history"; tags = [ "from:oh-my-zsh" ]; }
-              { name = "lib/termsupport"; tags = [ "from:oh-my-zsh" ]; }
+              # { name = "lib/termsupport"; tags = [ "from:oh-my-zsh" ]; }
               { name = "lib/theme-and-appearance"; tags = [ "from:oh-my-zsh" ]; }
               { name = "zsh-users/zsh-autosuggestions"; }
               { name = "chrissicool/zsh-256color"; }

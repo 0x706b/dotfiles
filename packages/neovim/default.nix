@@ -5,6 +5,6 @@
     # package = pkgs.neovim;
   };
   home.file.".config/nvim" = {
-    source = config.lib.file.mkOutOfStoreSymlink /Users/peter/dotfiles/packages/neovim/nvim;
+    source = config.lib.file.mkOutOfStoreSymlink /home/peter/dotfiles/packages/neovim/nvim;
   };
 }

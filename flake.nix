@@ -18,8 +18,9 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
   };
-  outputs = { self, darwin, nixpkgs, home-manager, nil, ... }@inputs:
+  outputs = { self, darwin, nixpkgs, home-manager, nil, nixos-wsl, ... }@inputs:
   let
     inherit (darwin.lib) darwinSystem;
 
@@ -29,18 +30,32 @@
     };
 
     user = "peter";
-    system = "x86_64-darwin";
     hm = home-manager.lib.hm;
     ghc-version = "982";
   in
   {
-    darwinConfigurations.Peters-MacBook-Pro = darwinSystem {
+    darwinConfigurations.Peters-MacBook-Pro = let
+      system = "x86_64-darwin";
+    in darwinSystem {
       inherit system;
       specialArgs = { inherit inputs nixpkgsConfig user system nil hm ghc-version; };
       modules = [
         home-manager.darwinModules.home-manager
-        ./configuration.nix
-        ./home.nix
+        ./configuration/darwin
+        ./home/darwin
+      ];
+    };
+
+    nixosConfigurations.nixos = let
+      system = "x86_64-linux";
+    in nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs = { inherit inputs nixpkgsConfig user system nil hm ghc-version; };
+      modules = [
+        nixos-wsl.nixosModules.default
+        home-manager.nixosModules.home-manager
+        ./configuration/nixos-wsl
+        ./home/nixos-wsl
       ];
     };
   };
