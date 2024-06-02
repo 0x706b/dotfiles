@@ -14,6 +14,8 @@ vim.cmd [[autocmd CursorHold * silent lua vim.lsp.buf.document_highlight()]]
 vim.cmd [[autocmd CursorMoved  * lua vim.lsp.buf.clear_references()]]
 vim.cmd [[autocmd CursorMovedI * lua vim.lsp.buf.clear_references()]]
 
+vim.cmd [[autocmd InsertEnter * silent lua vim.diagnostic.reset()]]
+
 lspconfig.eslint.setup({
   useESLintClass = true,
   workingDirectory = {

@@ -36,6 +36,7 @@
           pkgs.nodePackages.pnpm
           pkgs.woff2
           pkgs.ruby
+          pkgs.ripgrep
           pkgs.kubectl
           pkgs.minikube
           pkgs.docker

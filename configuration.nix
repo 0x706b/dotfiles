@@ -13,7 +13,10 @@
 
   nixpkgs.config = nixpkgsConfig;
   nixpkgs.overlays = [
-    inputs.neovim-nightly-overlay.overlay
+    (self: super: {
+      neovim = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+    })
+    # inputs.neovim-nightly-overlay.overlay
   ];
 
   users.users.${user} = {
