@@ -15,11 +15,27 @@ require("lazy").setup({
   '0x706b/zenburn.nvim',
 
   {
+    'AlexvZyl/nordic.nvim',
+    lazy = false,
+    priority = 1000
+  },
+
+  {
+    'ramojus/mellifluous.nvim',
+    config = function ()
+      require("config.mellifluous")
+    end
+  },
+
+  {
     'glepnir/galaxyline.nvim',
     config = function ()
       require("config.galaxyline")
     end,
-    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true }
+    dependencies =
+      {
+        { 'nvim-tree/nvim-web-devicons', opt = true },
+      }
   },
 
   'sainnhe/everforest',

@@ -1,9 +1,9 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, ... }:
 {
   programs.tmux = {
     enable = true;
     secureSocket = false;
-    terminal = "xterm-kitty";
+    terminal = if pkgs.stdenv.isDarwin then "xterm-kitty" else "xterm";
     plugins = with pkgs;
       [ tmuxPlugins.sensible
         { plugin = tmuxPlugins.tmux-colors-solarized;
@@ -57,10 +57,14 @@
       bind -n M-Left select-window -p
       bind -n M-Right select-window -n
 
-      # kitty terminal
-      set -g default-terminal "xterm-kitty"
-      set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
-      set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
-    '';
+    '' + (
+      if pkgs.stdenv.isDarwin then ''
+        # kitty terminal
+        set -g default-terminal "xterm-kitty"
+        set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
+        set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
+      '' 
+      else ""
+    );
   };
 }

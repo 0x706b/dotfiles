@@ -1,1 +1,1 @@
-return require 'colors.monotone'
+return require 'colors.mellifluous'

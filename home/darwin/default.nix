@@ -1,6 +1,7 @@
-{ nixpkgs, inputs, home-manager, user, pkgs, nil, system, lib, config, hm, ghc-version, ... }:
+{ user, nil, system, ghc-version, isWsl, ... }:
 {
   home-manager = {
+    extraSpecialArgs = { inherit isWsl; };
     useGlobalPkgs = true;
     useUserPackages = true;
     users.${user} = { pkgs, ... }: {
@@ -10,6 +11,7 @@
           ../../packages/tmux
           ../../packages/yabai
           ../../packages/vscode-server
+          ../../packages/git
         ];
       home.stateVersion = "22.05";
       home.packages =

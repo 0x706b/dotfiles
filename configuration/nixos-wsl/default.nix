@@ -27,7 +27,7 @@
   users.users.${user} = {
     isNormalUser = true;
     home = "/home/${user}";
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" ];
     shell = pkgs.zsh;
   };
 
@@ -39,7 +39,29 @@
 
   wsl.enable = true;
   wsl.defaultUser = user;
-  
+  wsl.docker-desktop.enable = false;
+  wsl.extraBin = with pkgs; [
+    # Binaries for Docker Desktop wsl-distro-proxy
+    { src = "${coreutils}/bin/mkdir"; }
+    { src = "${coreutils}/bin/cat"; }
+    { src = "${coreutils}/bin/whoami"; }
+    { src = "${coreutils}/bin/ls"; }
+    { src = "${busybox}/bin/addgroup"; }
+    { src = "${su}/bin/groupadd"; }
+    { src = "${su}/bin/usermod"; }
+  ];
+  wsl.wslConf.automount.root = "/mnt";
+  wsl.wslConf.interop.appendWindowsPath = true;
+  wsl.wslConf.network.generateHosts = false;
+
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = true;
+    autoPrune.enable = true;
+  };
+
+  systemd.services.docker-desktop-proxy.script = lib.mkForce ''${config.wsl.wslConf.automount.root}/wsl/docker-desktop/docker-desktop-user-distro proxy --docker-desktop-root ${config.wsl.wslConf.automount.root}/wsl/docker-desktop "C:\Program Files\Docker\Docker\resources"'';
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It's perfectly fine and recommended to leave

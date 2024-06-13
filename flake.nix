@@ -1,5 +1,6 @@
 {
   description = "0x706b Home Manager Flake";
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     home-manager = {
@@ -20,10 +21,9 @@
     };
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
   };
+
   outputs = { self, darwin, nixpkgs, home-manager, nil, nixos-wsl, ... }@inputs:
   let
-    inherit (darwin.lib) darwinSystem;
-
     nixpkgsConfig = {
       allowUnfree = true;
       allowUnsupportedSystem = false;
@@ -34,11 +34,13 @@
     ghc-version = "982";
   in
   {
-    darwinConfigurations.Peters-MacBook-Pro = let
+    darwinConfigurations.Peters-MacBook-Pro =
+    let
       system = "x86_64-darwin";
-    in darwinSystem {
+      isWsl = false;
+    in darwin.lib.darwinSystem {
       inherit system;
-      specialArgs = { inherit inputs nixpkgsConfig user system nil hm ghc-version; };
+      specialArgs = { inherit inputs nixpkgsConfig user system nil hm isWsl ghc-version; };
       modules = [
         home-manager.darwinModules.home-manager
         ./configuration/darwin
@@ -46,11 +48,13 @@
       ];
     };
 
-    nixosConfigurations.nixos = let
+    nixosConfigurations.nixos =
+    let
       system = "x86_64-linux";
+      isWsl = true;
     in nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit inputs nixpkgsConfig user system nil hm ghc-version; };
+      specialArgs = { inherit inputs nixpkgsConfig user system nil hm isWsl ghc-version; };
       modules = [
         nixos-wsl.nixosModules.default
         home-manager.nixosModules.home-manager

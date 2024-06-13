@@ -1,6 +1,7 @@
-{ nixpkgs, inputs, home-manager, user, pkgs, nil, system, lib, config, hm, ghc-version, ... }:
+{ user, nil, system, ghc-version, isWsl, ... }:
 {
   home-manager = {
+    extraSpecialArgs = { inherit isWsl; };
     useGlobalPkgs = true;
     useUserPackages = true;
     users.${user} = { pkgs, ... }: {
@@ -10,38 +11,40 @@
           ../../packages/tmux
           ../../packages/yabai
           ../../packages/vscode-server
+          ../../packages/npm
+          ../../packages/git
         ];
+
       home.stateVersion = "22.05";
+
       home.packages =
-        [ # Starship terminal prompt
-          pkgs.starship
+        with pkgs; [ # Starship terminal prompt
+          starship
           # Glasgow Haskell Compiler
-          pkgs.haskell.compiler."ghc${ghc-version}"
-          # Haskell Language Server
-          pkgs.haskell.packages."ghc${ghc-version}".haskell-language-server
-          pkgs.ghcid
-          pkgs.stack
-          pkgs.haskellPackages.cabal-install
-          # Nix Language Server
+          haskell.compiler."ghc${ghc-version}"
+          haskell.packages."ghc${ghc-version}".haskell-language-server
+          ghcid
+          stack
+          haskellPackages.cabal-install
           nil.packages.${system}.default
-          # eza (ls replacement)
-          pkgs.eza
-          pkgs.gnupg
-          pkgs.gh
-          pkgs.fzf
-          pkgs.nodejs_22
-          pkgs.yarn
-          pkgs.bat
-          # nix utilities
-          pkgs.nix-prefetch-git
-          pkgs.nodePackages.pnpm
-          pkgs.woff2
-          pkgs.ruby
-          pkgs.kubectl
-          pkgs.minikube
-          pkgs.docker
-          pkgs.edgedb
+          eza
+          gnupg
+          gh
+          fzf
+          nodejs_22
+          yarn
+          bat
+          nix-prefetch-git
+          nodePackages.pnpm
+          woff2
+          ruby
+          kubectl
+          minikube
+          docker
+          edgedb
+          nodePackages.vscode-langservers-extracted
         ];
+
       programs.zsh = {
         enable = true;
         shellAliases = {
@@ -72,6 +75,7 @@
             export COLORTERM="truecolor"
           fi
         '';
+
         zplug = {
           enable = true;
           plugins =
