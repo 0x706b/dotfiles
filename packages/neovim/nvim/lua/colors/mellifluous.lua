@@ -1,13 +1,4 @@
-local colors = require("mellifluous").load()
-
-
-require('mellifluous.config').prepare()
-
-local colors = require('mellifluous.colors').get_colors()
-local highlighter = require('mellifluous.utils.highlighter')
-
-require('mellifluous.highlights').set(highlighter, colors)
-require('mellifluous.config').set_highlight_overrides(highlighter, colors)
+local _, colors = require("mellifluous").load()
 
 return {
   bg = colors.bg.hex,

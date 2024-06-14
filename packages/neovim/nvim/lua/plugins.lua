@@ -20,12 +20,7 @@ require("lazy").setup({
     priority = 1000
   },
 
-  {
-    'ramojus/mellifluous.nvim',
-    config = function ()
-      require("config.mellifluous")
-    end
-  },
+  'ramojus/mellifluous.nvim',
 
   {
     'glepnir/galaxyline.nvim',
