@@ -1,26 +1,24 @@
 local fn = vim.fn
 
 require("lazy").setup({
-  'wbthomason/packer.nvim',
-
+  -- Themes
   '0x706b/monotone.nvim',
-  'mcchrish/zenbones.nvim',
+  '0x706b/zenburn.nvim',
   '0x706b/crumbling.nvim',
   '0x706b/parchment.nvim',
+  'mcchrish/zenbones.nvim',
   'sainnhe/sonokai',
   'lifepillar/vim-solarized8',
   'Mofiqul/dracula.nvim',
   'ellisonleao/gruvbox.nvim',
-
-  '0x706b/zenburn.nvim',
-
+  "projekt0n/github-nvim-theme",
+  'ramojus/mellifluous.nvim',
+  'sainnhe/everforest',
   {
     'AlexvZyl/nordic.nvim',
     lazy = false,
     priority = 1000
   },
-
-  'ramojus/mellifluous.nvim',
 
   {
     'glepnir/galaxyline.nvim',
@@ -33,9 +31,9 @@ require("lazy").setup({
       }
   },
 
-  'sainnhe/everforest',
-
   'purescript-contrib/purescript-vim',
+
+  -- LSP
 
   {
     'neovim/nvim-lspconfig',
@@ -84,6 +82,16 @@ require("lazy").setup({
   },
 
   {
+    "mrcjkb/haskell-tools.nvim",
+    tag = '3.1.9',
+    config = function()
+      require("config.haskell-tools")
+    end
+  },
+
+  -- Neotree
+
+  {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     lazy = false,
@@ -97,6 +105,8 @@ require("lazy").setup({
       require('config.neotree')
     end
   },
+
+  -- Telescope
 
   {
     'nvim-telescope/telescope.nvim',
@@ -114,13 +124,7 @@ require("lazy").setup({
     end
   },
 
-  {
-    "mrcjkb/haskell-tools.nvim",
-    tag = '3.1.9',
-    config = function()
-      require("config.haskell-tools")
-    end
-  },
+  -- Typescript
 
   {
     'HerringtonDarkholme/yats.vim',
@@ -128,25 +132,13 @@ require("lazy").setup({
       vim.g.yats_host_keyword = 0
     end
   },
-
   'othree/yajs.vim',
   'Quramy/vim-js-pretty-template',
   'MaxMEllon/vim-jsx-pretty',
-  -- use 'styled-components/vim-styled-components'
-
   {
-    'Raimondi/delimitMate',
+    'numToStr/Comment.nvim',
     config = function ()
-      vim.g.delimitMate_expand_cr = 1
-      vim.g.delimitMate_expand_space = 1
-    end
-  },
-
-
-  {
-    'preservim/nerdcommenter',
-    config = function ()
-      vim.api.nvim_command('source ~/.config/nvim/config/nerdcommenter.vim')
+      require("config.comment")
     end
   },
   'ryanoasis/vim-devicons',
@@ -196,8 +188,15 @@ require("lazy").setup({
   },
 
   {
-    'rktjmp/lush.nvim'
+    "numtostr/FTerm.nvim",
+    config = function ()
+      require'config.fterm'
+    end
   },
+
+  'rktjmp/lush.nvim',
+
+  -- Treesitter
 
   {
     'nvim-treesitter/nvim-treesitter',
@@ -209,14 +208,19 @@ require("lazy").setup({
   },
 
   {
-    "numtostr/FTerm.nvim",
+    'windwp/nvim-ts-autotag',
     config = function ()
-      require'config.fterm'
+      require("config.nvim-ts-autotag")
     end
   },
 
+  "JoosepAlviste/nvim-ts-context-commentstring",
+
   {
-    "projekt0n/github-nvim-theme"
+    'windwp/nvim-autopairs',
+    config = function ()
+      require("config.nvim-autopairs")
+    end
   },
 
   "edgedb/edgedb-vim"
