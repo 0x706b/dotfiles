@@ -2,13 +2,9 @@ set termguicolors
 set noshowmode
 set wildmenu
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
-" set ttyfast
-" set lazyredraw
 set nohlsearch
 set tabstop=2
 set shiftwidth=2
-" set autoindent
-" set smartindent
 set expandtab
 set mouse=a
 set cmdheight=2
@@ -18,10 +14,7 @@ set signcolumn=yes
 set number relativenumber
 set backspace=2
 set hidden
-" set autowrite
 let mapleader = "\<Space>"
-
-" filetype plugin indent on
 
 set cursorline
 autocmd WinEnter * setlocal cursorline
@@ -50,7 +43,3 @@ augroup highlight_yank
   au TextYankPost * silent! lua vim.highlight.on_yank { higroup='Search', timeout=500 }
 augroup END
 
-" autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
-" autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
-
-" autocmd BufEnter * source /Users/peter/.config/nvim/colorschemes/setcolors.vim

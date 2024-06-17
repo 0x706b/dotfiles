@@ -6,6 +6,9 @@ M.initialized = false
 M.init = function()
   mellifluous.setup({
     color_set = 'mellifluous',
+    mellifluous = {
+      bg_contrast = "hard",
+    },
     plugins = {
       treesitter = true
     },
