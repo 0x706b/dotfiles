@@ -2,22 +2,31 @@ local fn = vim.fn
 
 require("lazy").setup({
   -- Themes
-  '0x706b/monotone.nvim',
-  '0x706b/zenburn.nvim',
-  '0x706b/crumbling.nvim',
-  '0x706b/parchment.nvim',
-  'mcchrish/zenbones.nvim',
-  'sainnhe/sonokai',
-  'lifepillar/vim-solarized8',
-  'Mofiqul/dracula.nvim',
-  'ellisonleao/gruvbox.nvim',
-  "projekt0n/github-nvim-theme",
-  'ramojus/mellifluous.nvim',
-  'sainnhe/everforest',
+  { '0x706b/monotone.nvim', enabled = false },
+  { '0x706b/zenburn.nvim', enabled = false },
+  { '0x706b/crumbling.nvim', enabled = false },
+  { '0x706b/parchment.nvim', enabled = false },
+  { 'mcchrish/zenbones.nvim', enabled = false },
+  { 'sainnhe/sonokai', enabled = false },
+  { 'lifepillar/vim-solarized8', enabled = false },
+  { 'Mofiqul/dracula.nvim', enabled = false },
+  { 'ellisonleao/gruvbox.nvim', enabled = false },
+  { "projekt0n/github-nvim-theme", enabled = false },
+
+  {
+    'ramojus/mellifluous.nvim',
+    priority = 9999,
+    config = function()
+      require("config.colorscheme.current_color").set_colorscheme("mellifluous")
+    end
+  },
+
+  { 'sainnhe/everforest', enabled = false },
   {
     'AlexvZyl/nordic.nvim',
     lazy = false,
-    priority = 1000
+    priority = 1000,
+    enabled = false
   },
 
   {

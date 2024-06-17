@@ -18,7 +18,4 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("plugins")
-
 EOF
-
-source ~/.config/nvim/colorschemes/setcolors.vim

@@ -1,6 +1,8 @@
 local lspconfig = require("lspconfig")
+local border = require("util.border")
+local api, lsp, diagnostic, map = vim.api, vim.lsp, vim.diagnostic, vim.keymap
 
-vim.diagnostic.config({
+diagnostic.config({
   virtual_text = false,
   float = {
     border = "rounded",
@@ -8,13 +10,35 @@ vim.diagnostic.config({
   }
 })
 
-vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus = false })]]
+lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, {
+  border = "rounded"
+})
 
-vim.cmd [[autocmd CursorHold * silent lua vim.lsp.buf.document_highlight()]]
-vim.cmd [[autocmd CursorMoved  * lua vim.lsp.buf.clear_references()]]
-vim.cmd [[autocmd CursorMovedI * lua vim.lsp.buf.clear_references()]]
+api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+  callback = function()
+    vim.diagnostic.open_float(nil, { focus = false })
+  end
+})
 
-vim.cmd [[autocmd InsertEnter * silent lua vim.diagnostic.reset()]]
+api.nvim_create_autocmd({ "CursorHold" }, {
+  callback = function()
+    vim.lsp.buf.document_highlight()
+  end
+})
+
+api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+  callback = function()
+    vim.lsp.buf.clear_references()
+  end
+})
+
+api.nvim_create_autocmd({ "InsertEnter" }, {
+  callback = function()
+    vim.diagnostic.reset()
+  end
+})
+
+map.set("n", "K", lsp.buf.hover, { buffer = true })
 
 lspconfig.eslint.setup({
   useESLintClass = true,

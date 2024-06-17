@@ -1,13 +1,12 @@
-local gl = require "galaxyline"
-local colors = require 'colors.current'
+local gl = require("galaxyline")
 
-gl.short_line_list = { 'coc-explorer' }
+local colors = require("config.colorscheme.current_color").galaxyline_colors
 
 local gls = gl.section
 
-local vcs = require "galaxyline.provider_vcs"
+local vcs = require("galaxyline.provider_vcs")
 
-local condition = require('galaxyline.condition')
+local condition = require("galaxyline.condition")
 
 local modes = {
   n = "normal",
