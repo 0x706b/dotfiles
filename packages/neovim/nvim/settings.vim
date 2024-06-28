@@ -24,15 +24,6 @@ autocmd WinLeave * setlocal nocursorline
 autocmd Filetype json let g:indentLine_setConceal = 0
 let g:vim_json_syntax_conceal = 0
 
-""" Shortcut to find which syntax groups a term is assigned to
-nmap <leader>sp :call <SID>SynStack()<CR>
-function! <SID>SynStack()
-  if !exists('*synstack')
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
-
 au BufNewFile,BufRead *.ts setlocal filetype=typescript
 au BufNewFile,BufRead *.tsx setlocal filetype=typescriptreact
 autocmd FileType typescript JsPreTmpl

@@ -1,4 +1,6 @@
-local Gruvbox = require("gruvbox")
+local M = {}
+
+M.initialized = false
 
 local function get_colors()
   local p = Gruvbox.palette
@@ -82,32 +84,49 @@ local function get_colors()
   return color_groups[bg]
 end
 
-local palette = get_colors()
+M.init = function ()
+  require("gruvbox").setup({
+    contrast = "hard"
+  })
 
-return {
-  bg = palette.bg0,
-  bg0 = palette.bg1,
-  bg1 = palette.bg2,
-  bg2 = palette.bg3,
-  fg = palette.fg0,
-  fg0 = palette.fg1,
-  fg1 = palette.fg2,
-  fg2 = palette.fg3,
-  b = {
-    red = palette.red,
-    yellow = palette.yellow,
-    blue = palette.blue
-  },
-  n = {
-    yellow = palette.neutral_yellow,
-    red = palette.neutral_red,
-    blue = palette.neutral_blue,
-    green = palette.neutral_green,
-    magenta = palette.neutral_purple
-  },
-  git = {
-    add = palette.green,
-    change = palette.blue,
-    delete = palette.red
+  local palette = get_colors()
+
+  M.gruvbox_colors = {
+    bg = palette.bg0,
+    bg0 = palette.bg1,
+    bg1 = palette.bg2,
+    bg2 = palette.bg3,
+    fg = palette.fg0,
+    fg0 = palette.fg1,
+    fg1 = palette.fg2,
+    fg2 = palette.fg3,
+    b = {
+      red = palette.red,
+      yellow = palette.yellow,
+      blue = palette.blue
+    },
+    n = {
+      yellow = palette.neutral_yellow,
+      red = palette.neutral_red,
+      blue = palette.neutral_blue,
+      green = palette.neutral_green,
+      magenta = palette.neutral_purple
+    },
+    git = {
+      add = palette.green,
+      change = palette.blue,
+      delete = palette.red
+    }
   }
-}
+
+  vim.cmd.colorscheme("gruvbox")
+
+  M.initialized = true
+end
+
+if not M.initialized then
+  M.init()
+end
+
+return M
+

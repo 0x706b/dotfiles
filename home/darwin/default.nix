@@ -10,42 +10,36 @@
           ../../packages/kitty
           ../../packages/tmux
           ../../packages/yabai
-          ../../packages/vscode-server
           ../../packages/git
         ];
       home.stateVersion = "22.05";
       home.packages =
-        [ # Starship terminal prompt
-          pkgs.starship
-          # Glasgow Haskell Compiler
-          pkgs.haskell.compiler."ghc${ghc-version}"
-          # Haskell Language Server
-          pkgs.haskell.packages."ghc${ghc-version}".haskell-language-server
-          pkgs.ghcid
-          pkgs.stack
-          pkgs.haskellPackages.cabal-install
-          # Nix Language Server
+        with pkgs; [ # Starship terminal prompt
+          starship
+          haskell.compiler."ghc${ghc-version}"
+          haskell.packages."ghc${ghc-version}".haskell-language-server
+          ghcid
+          stack
+          haskellPackages.cabal-install
           nil.packages.${system}.default
-          # eza (ls replacement)
-          pkgs.eza
-          pkgs.gnupg
-          pkgs.gh
-          pkgs.fzf
-          pkgs.nodejs_22
-          pkgs.yarn
-          pkgs.bat
-          # nix utilities
-          pkgs.nix-prefetch-git
-          pkgs.nodePackages.pnpm
-          pkgs.woff2
-          pkgs.ruby
-          pkgs.ripgrep
-          pkgs.kubectl
-          pkgs.minikube
-          pkgs.docker
-          pkgs.edgedb
-          pkgs.clang
-          pkgs.llvmPackages.libcxxStdenv
+          eza
+          gnupg
+          gh
+          fzf
+          nodejs_22
+          yarn
+          bat
+          nix-prefetch-git
+          nodePackages.pnpm
+          woff2
+          ruby
+          ripgrep
+          kubectl
+          minikube
+          docker
+          edgedb
+          clang
+          llvmPackages.libcxxStdenv
         ];
       programs.zsh = {
         enable = true;

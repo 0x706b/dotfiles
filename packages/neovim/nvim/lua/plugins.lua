@@ -91,6 +91,13 @@ require("lazy").setup({
   },
 
   {
+    "ray-x/lsp_signature.nvim",
+    config = function()
+      require("config.lsp_signature")
+    end
+  },
+
+  {
     "mrcjkb/haskell-tools.nvim",
     tag = '3.1.9',
     config = function()
@@ -101,8 +108,8 @@ require("lazy").setup({
   -- Neotree
 
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
+    "0x706b/neo-tree.nvim",
+    branch = "feat/allow-win-options-override",
     lazy = false,
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -180,13 +187,6 @@ require("lazy").setup({
   },
 
   {
-   'easymotion/vim-easymotion',
-   config = function ()
-     vim.api.nvim_command('source ~/.config/nvim/config/easymotion.vim')
-   end
-  },
-
-  {
     'lewis6991/gitsigns.nvim',
     dependencies = {
       'nvim-lua/plenary.nvim'
@@ -232,5 +232,16 @@ require("lazy").setup({
     end
   },
 
-  "edgedb/edgedb-vim"
+  "edgedb/edgedb-vim",
+
+  {
+    "scalameta/nvim-metals",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    ft = { "scala", "sbt", "java" },
+    config = function()
+      require("config.nvim-metals")
+    end
+  }
 })

@@ -12,7 +12,6 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
-vim.cmd.source("~/.config/nvim/settings.vim")
-vim.cmd.source("~/.config/nvim/mapping.vim")
-
+require("settings")
+require("mappings")
 require("plugins")

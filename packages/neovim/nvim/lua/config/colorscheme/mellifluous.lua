@@ -27,6 +27,12 @@ M.init = function()
         hl.set("DiagnosticOk", { fg = colors.ui_green })
         hl.set("DiagnosticUnderlineOk",  { undercurl = true, sp = hl.get("DiagnosticOk").fg })
         hl.set("DiagnosticUnnecessary", { fg = hl.get("Ignore").fg })
+        hl.set("NeoTreeNormal", hl.get("Normal"))
+        hl.set("NeoTreeNormalNC", hl.get("Normal"))
+        hl.set("NeoTreePopup", hl.get("Normal"))
+        hl.set("NeoTreeEndOfBuffer", hl.get("EndOfBuffer"))
+        hl.set("NeoTreeSeparator", hl.get("VertSplit"))
+        hl.set("NeoTreeWinSeparator", hl.get("VertSplit"))
       end
     }
   })
@@ -38,9 +44,9 @@ M.init = function()
     bg0 = colors.bg:lightened(5).hex,
     bg1 = colors.bg:lightened(10).hex,
     fg = colors.fg.hex,
-    fg0 = colors.fg.hex,
-    fg1 = colors.fg.hex,
-    fg2 = colors.fg.hex,
+    fg0 = colors.fg:darkened(5).hex,
+    fg1 = colors.fg:darkened(10).hex,
+    fg2 = colors.fg:darkened(15).hex,
     b = {
       red = colors.red.hex,
       yellow = colors.yellow.hex,

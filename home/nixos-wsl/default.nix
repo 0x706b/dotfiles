@@ -20,7 +20,6 @@
       home.packages =
         with pkgs; [ # Starship terminal prompt
           starship
-          # Glasgow Haskell Compiler
           haskell.compiler."ghc${ghc-version}"
           haskell.packages."ghc${ghc-version}".haskell-language-server
           ghcid
@@ -43,6 +42,16 @@
           docker
           edgedb
           nodePackages.vscode-langservers-extracted
+          ripgrep
+
+          ammonite
+          coursier
+          scala
+          scala-cli
+          sbt
+          scalafmt
+          metals
+          zulu
         ];
 
       programs.zsh = {

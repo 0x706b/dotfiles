@@ -46,10 +46,10 @@ cmp.setup({
   },
   window = {
     completion = cmp.config.window.bordered({
-      winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+      -- winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
     }),
     documentation = cmp.config.window.bordered({
-      winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+      -- winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
     }),
     col_offset = -3,
     side_padding = 0,
@@ -90,11 +90,18 @@ cmp.setup({
   sources = cmp.config.sources(
     {
       { name = 'nvim_lsp' },
-      { name = 'nvim_lsp_signature_help' },
+      -- { name = 'nvim_lsp_signature_help' },
       { name = 'vsnip' },
     },
     {
-      { name = 'buffer' },
+      {
+        name = 'buffer',
+        option = {
+          get_bufnrs = function()
+            return vim.api.nvim_list_bufs()
+          end
+        }
+      },
       { name = 'path' }
     }
   ),

@@ -1,6 +1,51 @@
+local themes = require("telescope.themes")
+
+local dropdown_theme = themes.get_dropdown({
+  winblend = 20,
+})
+
 require("telescope").setup({})
 
-local map = vim.api.nvim_set_keymap
+local builtin = require("telescope.builtin")
 
-map('n', 'gd', ':lua require("telescope.builtin").lsp_definitions{}<CR>', { noremap = true, silent = true })
-map('n', 'gr', ':lua require("telescope.builtin").lsp_references{}<CR>', { noremap = true, silent = true })
+local map = vim.keymap.set
+
+map(
+  'n', 'gd',
+  function()
+    builtin.lsp_definitions()
+  end,
+  { noremap = true, silent = true }
+)
+
+map(
+  'n', 'gr',
+  function()
+    builtin.lsp_references()
+  end,
+  { noremap = true, silent = true }
+)
+
+map(
+  "n", "<leader>x",
+  function()
+    builtin.diagnostics()
+  end,
+  { noremap = true, silent = true }
+)
+
+map(
+  "n", "<leader>g",
+  function()
+    builtin.live_grep()
+  end,
+  { noremap = true, silent = true }
+)
+
+map(
+  "n", "<leader>f",
+  function()
+    builtin.find_files(dropdown_theme)
+  end,
+  { noremap = true, silent = true }
+)
