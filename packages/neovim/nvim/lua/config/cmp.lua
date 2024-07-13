@@ -90,8 +90,9 @@ cmp.setup({
   sources = cmp.config.sources(
     {
       { name = 'nvim_lsp' },
-      -- { name = 'nvim_lsp_signature_help' },
+      { name = 'nvim_lsp_signature_help' },
       { name = 'vsnip' },
+      { name = 'npm', keyword_length = 4 },
     },
     {
       {
@@ -117,3 +118,5 @@ cmp.setup({
     end,
   }
 })
+
+require("cmp-npm").setup({})

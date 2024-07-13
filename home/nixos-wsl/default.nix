@@ -11,7 +11,6 @@
           ../../packages/tmux
           ../../packages/yabai
           ../../packages/vscode-server
-          ../../packages/npm
           ../../packages/git
         ];
 
@@ -43,6 +42,7 @@
           edgedb
           nodePackages.vscode-langservers-extracted
           ripgrep
+          lua-language-server
 
           ammonite
           coursier

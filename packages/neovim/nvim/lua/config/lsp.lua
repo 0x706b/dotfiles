@@ -21,8 +21,19 @@ api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 })
 
 api.nvim_create_autocmd({ "CursorHold" }, {
-  callback = function()
-    vim.lsp.buf.document_highlight()
+  callback = function(ev)
+    local hasDocumentHighlight = false
+    local clients = vim.lsp.get_clients({ bufnr = ev.buf })
+    for _, client in pairs(clients) do
+      if client.server_capabilities.documentHighlightProvider ~= nil then
+        hasDocumentHighlight = true
+        break
+      end
+    end
+
+    if hasDocumentHighlight == true then
+      vim.lsp.buf.document_highlight()
+    end
   end
 })
 
@@ -46,6 +57,8 @@ lspconfig.eslint.setup({
     mode = "auto"
   }
 })
+
+lspconfig.jsonls.setup({})
 
 lspconfig.lua_ls.setup({
   on_init = function(client)
