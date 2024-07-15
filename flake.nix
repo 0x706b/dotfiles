@@ -29,14 +29,14 @@
       allowUnsupportedSystem = false;
     };
 
-    user = "peter";
+    user = "pkrol";
     hm = home-manager.lib.hm;
     ghc-version = "982";
   in
   {
-    darwinConfigurations.Peters-MacBook-Pro =
+    darwinConfigurations.MacBook-Pro =
     let
-      system = "x86_64-darwin";
+      system = "aarch64-darwin";
       isWsl = false;
     in darwin.lib.darwinSystem {
       inherit system;
@@ -44,6 +44,7 @@
       modules = [
         home-manager.darwinModules.home-manager
         ./configuration/darwin
+        ./packages/yabai
         ./home/darwin
       ];
     };

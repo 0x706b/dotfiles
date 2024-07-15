@@ -25,12 +25,14 @@ opt.cursorline = true
 
 api.nvim_create_autocmd("WinEnter", {
   callback = function()
+    vim.cmd("syntax on")
     opt_local.cursorline = true
   end
 })
 
 api.nvim_create_autocmd("WinLeave", {
   callback = function()
+    vim.cmd("syntax off")
     opt_local.cursorline = false
   end
 })

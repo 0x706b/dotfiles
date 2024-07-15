@@ -13,10 +13,7 @@
 
   nixpkgs.config = nixpkgsConfig;
   nixpkgs.overlays = [
-    (self: super: {
-      neovim = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
-    })
-    # inputs.neovim-nightly-overlay.overlay
+    inputs.neovim-nightly-overlay.overlays.default
   ];
 
   users.users.${user} = {
@@ -35,29 +32,40 @@
       "fzf"
       "archey4"
       "lua-language-server"
-      "koekeishiya/formulae/skhd"
-      "koekeishiya/formulae/yabai"
+      # "koekeishiya/formulae/skhd"
+      # "koekeishiya/formulae/yabai"
+      "k9s"
+      "jq"
+      "lima"
+      "kubernetes-cli"
+      "tilt-dev/tap/tilt"
+      "k3d"
+      "adr-tools"
+      "graphviz"
+      "mvn"
     ];
     taps = [
       "homebrew/bundle"
       "homebrew/services"
-      "koekeishiya/formulae"
+      # "koekeishiya/formulae"
+      "tilt-dev/tap"
     ];
     casks = [
       "discord"
       "docker"
       "firefox"
-      "google-chrome"
+      # "google-chrome"
       "karabiner-elements"
       "kitty"
       "spotify"
       "visual-studio-code"
-      "1password"
+      "amethyst"
+      "cameracontroller"
     ];
   };
 
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.stable;
     settings = {
       allowed-users = [ user ];
       experimental-features = [ "nix-command" "flakes" ];
@@ -69,7 +77,7 @@
   system = {
     defaults = {
       dock = {
-        autohide = true;
+        autohide = false;
         autohide-delay = 0.0;
         autohide-time-modifier = 0.15;
       };

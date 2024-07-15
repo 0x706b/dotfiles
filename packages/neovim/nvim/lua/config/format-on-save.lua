@@ -34,7 +34,7 @@ format_on_save.setup({
   formatter_by_ft = {
     typescript = prettier_eslint,
     typescriptreact = prettier_eslint,
-    javascript = prettier_eslint,
+    javascript = prettier_eslint
   }
 })
 

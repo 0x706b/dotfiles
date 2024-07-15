@@ -2,7 +2,6 @@ local fn = vim.fn
 
 require("lazy").setup({
   -- Themes
-  { '0x706b/monotone.nvim', enabled = false },
   { '0x706b/zenburn.nvim', enabled = false },
   { '0x706b/crumbling.nvim', enabled = false },
   { '0x706b/parchment.nvim', enabled = false },
@@ -14,11 +13,20 @@ require("lazy").setup({
   { "projekt0n/github-nvim-theme", enabled = false },
 
   {
+    '0x706b/monotone.nvim',
+    priority = 9999,
+    enabled = false,
+    config = function()
+      require("config.colorscheme.current_color").set_colorscheme("monotone")
+    end,
+  },
+  {
     "catppuccin/nvim",
     priority = 9999,
     config = function()
       require("config.colorscheme.current_color").set_colorscheme("catppuccin")
-    end
+    end,
+    enabled = true
   },
 
   {
@@ -70,6 +78,13 @@ require("lazy").setup({
   },
 
   {
+    "windwp/nvim-ts-autotag",
+    config = function ()
+      require('config.nvim-ts-autotag')
+    end
+  },
+
+  {
     "hrsh7th/nvim-cmp",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -80,7 +95,7 @@ require("lazy").setup({
       "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-vsnip",
       "hrsh7th/vim-vsnip",
-      "hrsh7th/cmp-nvim-lsp-signature-help",
+      -- "hrsh7th/cmp-nvim-lsp-signature-help",
       "onsails/lspkind.nvim",
       "David-Kunz/cmp-npm",
     },
@@ -89,16 +104,30 @@ require("lazy").setup({
     end
   },
 
+  -- {
+  --   "nvimdev/lspsaga.nvim",
+  --   config = function()
+  --     require('config.lspsaga')
+  --   end,
+  --   dependencies = {
+  --     "nvim-lspconfig",
+  --     'nvim-treesitter/nvim-treesitter',
+  --     'nvim-tree/nvim-web-devicons',
+  --   }
+  -- },
+
   {
-    "nvimdev/lspsaga.nvim",
-    config = function()
-      require('config.lspsaga')
-    end,
-    dependencies = {
-      "nvim-lspconfig",
-      'nvim-treesitter/nvim-treesitter',
-      'nvim-tree/nvim-web-devicons',
-    }
+    "aznhe21/actions-preview.nvim",
+    config = function ()
+      require("config.actions-preview")
+    end
+  },
+
+  {
+    "smjonas/inc-rename.nvim",
+    config = function ()
+      require("config.inc-rename")
+    end
   },
 
   {
@@ -153,15 +182,15 @@ require("lazy").setup({
 
   -- Typescript
 
-  {
-    'HerringtonDarkholme/yats.vim',
-    config = function ()
-      vim.g.yats_host_keyword = 0
-    end
-  },
-  'othree/yajs.vim',
-  'Quramy/vim-js-pretty-template',
-  'MaxMEllon/vim-jsx-pretty',
+  -- {
+  --   'HerringtonDarkholme/yats.vim',
+  --   config = function ()
+  --     vim.g.yats_host_keyword = 0
+  --   end
+  -- },
+  -- 'othree/yajs.vim',
+  -- 'Quramy/vim-js-pretty-template',
+  -- 'MaxMEllon/vim-jsx-pretty',
   {
     'numToStr/Comment.nvim',
     config = function ()
@@ -205,13 +234,6 @@ require("lazy").setup({
     },
     config = function ()
       require'config.gitsigns'
-    end
-  },
-
-  {
-    "numtostr/FTerm.nvim",
-    config = function ()
-      require'config.fterm'
     end
   },
 
@@ -286,12 +308,9 @@ require("lazy").setup({
     "folke/noice.nvim",
     event = "VeryLazy",
     dependencies = {
-    -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-    "MunifTanjim/nui.nvim",
-    -- OPTIONAL:
-    --   `nvim-notify` is only needed, if you want to use the notification view.
-    --   If not available, we use `mini` as the fallback
-    "rcarriga/nvim-notify",
+      -- "MunifTanjim/nui.nvim",
+      -- "rcarriga/nvim-notify",
+      "hrsh7th/nvim-cmp",
     },
     config = function()
       require("config.noice")
@@ -301,4 +320,29 @@ require("lazy").setup({
   {
     "folke/drop.nvim"
   },
+
+  {
+    "antosha417/nvim-lsp-file-operations",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "0x706b/neo-tree.nvim"
+    },
+    config = function()
+      require("lsp-file-operations").setup()
+    end,
+  },
+
+  -- {
+  --   "petertriho/nvim-scrollbar",
+  --   config = function ()
+  --     require("config.nvim-scrollbar")
+  --   end
+  -- },
+
+  {
+    "norcalli/nvim-colorizer.lua",
+    config = function ()
+      require("config.nvim-colorizer")
+    end
+  }
 })

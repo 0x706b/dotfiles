@@ -1,5 +1,132 @@
 { ... }:
 {
-  home.file.".yabairc".source = ./.yabairc;
-  home.file.".skhdrc".source = ./.skhdrc;
+  services.yabai = {
+    enable = true;
+    config = {
+      mouse_follows_focus        = "off";
+      focus_follows_mouse        = "off";
+      window_placement           = "second_child";
+      window_topmost             = "off";
+      window_opacity             = "on";
+      window_opacity_duration    = "0.0";
+      window_shadow              = "on";
+      window_border              = "on";
+      window_border_width        = "4";
+      active_window_border_color = "0xffffca81";
+      normal_window_border_color = "0xff8bbdb3";
+      active_window_opacity      = "1.0";
+      normal_window_opacity      = "1.0";
+      split_ratio                = "0.50";
+      auto_balance               = "off";
+      mouse_modifier             = "fn";
+      mouse_action1              = "move";
+      mouse_action2              = "resize";
+
+      layout                     = "bsp";
+      top_padding                = "10";
+      bottom_padding             = "10";
+      left_padding               = "10";
+      right_padding              = "10";
+      window_gap                 = "10";
+    };
+
+    extraConfig = ''
+      yabai -m rule --add app="^System Settings$" manage=off
+      yabai -m rule --add app="^Transmission$" manage=off
+    '';
+  };
+
+  services.skhd = {
+    enable = true;
+    skhdConfig = ''
+      # Navigation
+      cmd + alt - h : yabai -m window --focus west
+      cmd + alt - j : yabai -m window --focus south
+      cmd + alt - k : yabai -m window --focus north
+      cmd + alt - l : yabai -m window --focus east
+
+      # Moving windows
+      # cmd + alt - left : yabai -m window --warp west
+      # cmd + alt - down : yabai -m window --warp south
+      # cmd + alt - up : yabai -m window --warp north
+      # cmd + alt - right : yabai -m window --warp east
+
+      cmd - right : yabai -m window --focus next
+      cmd - left : yabai -m window --focus prev
+
+      # Move focus container to workspace
+      shift + alt - m : yabai -m window --space last && yabai -m space --focus last
+      shift + alt - p : yabai -m window --space prev && yabai -m space --focus prev
+      shift + alt - n : yabai -m window --space next && yabai -m space --focus next
+      shift + alt - 1 : yabai -m window --space 1 && yabai -m space --focus 1
+      shift + alt - 2 : yabai -m window --space 2&& yabai -m space --focus 2
+      shift + alt - 3 : yabai -m window --space 3 && yabai -m space --focus 3
+      shift + alt - 4 : yabai -m window --space 4 && yabai -m space --focus 4
+      shift + alt - 5 : yabai -m window --space 5 && yabai -m space --focus 5
+      shift + alt - 6 : yabai -m window --space 6 && yabai -m space --focus 6
+
+      shift + alt - s : yabai -m window --toggle sticky
+
+      # Resize windows
+      lctrl + alt - h : \
+          yabai -m window --resize left:-20:0 ; \
+          yabai -m window --resize right:-20:0
+
+      lctrl + alt - j : \
+          yabai -m window --resize bottom:0:20 ; \
+          yabai -m window --resize top:0:20
+
+      lctrl + alt - k : \
+          yabai -m window --resize top:0:-20 ; \
+          yabai -m window --resize bottom:0:-20
+
+      lctrl + alt - l : \
+          yabai -m window --resize right:20:0 ; \
+          yabai -m window --resize left:20:0
+
+      # Float and center window
+      shift + alt - c : yabai -m window --toggle float;\
+                        yabai -m window --grid 8:8:1:1:6:6
+
+      # Equalize size of windows
+      lctrl + alt - 0 : yabai -m space --balance
+
+      # Enable / Disable gaps in current workspace
+      lctrl + alt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
+
+      # Rotate windows clockwise and anticlockwise
+      alt - r         : yabai -m space --rotate 90
+      shift + alt - r : yabai -m space --rotate 270
+
+      # Rotate on X and Y Axis
+      shift + alt - x : yabai -m space --mirror x-axis
+      shift + alt - y : yabai -m space --mirror y-axis
+
+      # Set insertion point for focused container
+      shift + lctrl + alt - h : yabai -m window --insert west
+      shift + lctrl + alt - j : yabai -m window --insert south
+      shift + lctrl + alt - k : yabai -m window --insert north
+      shift + lctrl + alt - l : yabai -m window --insert east
+
+      # Float / Unfloat window
+      shift + alt - space : yabai -m window --toggle float
+
+      # Restart Yabai
+      shift + lctrl + alt - r : 
+          /usr/bin/env osascript <<< \
+              "display notification \"Restarting Yabai\" with title \"Yabai\""; \
+          launchctl kickstart -k "gui/''${UID}/homebrew.mxcl.yabai"
+
+      # Make window native fullscreen
+      alt - up         : yabai -m window --toggle zoom-fullscreen
+      shift + alt - up : yabai -m window --toggle native-fullscreen 
+
+      .blacklist [
+         "Live"
+      ]
+      '';
+  };
+
+  # home.file.".yabairc".source = ./.yabairc;
+  # home.file.".skhdrc".source = ./.skhdrc;
 }

@@ -9,6 +9,7 @@ require'ibl'.setup {
     remove_blankline_trail = true,
   },
   scope = {
+    enabled = false,
     show_start = false,
     include = {
       node_type = {

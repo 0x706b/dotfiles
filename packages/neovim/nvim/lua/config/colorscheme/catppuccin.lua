@@ -37,7 +37,7 @@ M.init = function()
     fg1 = mocha.subtext0,
     fg2 = mocha.overlay2,
     b = {
-      red = mocha.rosewater,
+      red = mocha.red,
       yellow = mocha.peach,
       blue = mocha.teal
     },
