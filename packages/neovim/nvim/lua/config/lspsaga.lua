@@ -16,5 +16,7 @@ require('lspsaga').setup {
   }
 }
 
+-- map('n', 'K', '<cmd>Lspsaga hover_doc<CR>', { silent = true, noremap = true })
+
 map("n", "<leader>r", "<cmd>Lspsaga rename<CR>", { silent = true, noremap = true })
 map("n", "<leader>p", "<cmd>Lspsaga code_action<CR>", { silent = true, noremap = true })

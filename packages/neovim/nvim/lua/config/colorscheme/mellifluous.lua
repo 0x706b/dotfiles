@@ -8,6 +8,13 @@ M.init = function()
     color_set = 'mellifluous',
     mellifluous = {
       bg_contrast = "hard",
+      color_overrides = {
+        dark = {
+          bg = function (bg)
+            return bg:darkened(2)
+          end
+        }
+      }
     },
     color_overrides = {
       dark = {

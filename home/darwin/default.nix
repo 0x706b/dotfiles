@@ -9,7 +9,6 @@
         [ ../../packages/neovim
           ../../packages/kitty
           ../../packages/tmux
-          ../../packages/yabai
           ../../packages/git
         ];
       home.stateVersion = "22.05";
@@ -34,20 +33,30 @@
           woff2
           ruby
           ripgrep
-          kubectl
           minikube
           docker
           edgedb
           clang
           llvmPackages.libcxxStdenv
+          git-lfs
+          detekt
+          python311
+          kfilt
+          _1password-cli
+          mkdocs
+          gitui
+          google-cloud-sdk
+          (import ../../packages/upfind.nix pkgs)
         ];
       programs.zsh = {
         enable = true;
         shellAliases = {
+          "v." = "nvim $HOME/dotfiles/flake.nix";
+          ga = "git add --all";
+          gc = "git commit";
           v = "nvim";
           l = "exa -hla --icons";
           lt = "exa -hla --icons --tree --level 2 --git-ignore";
-          prettier-eslint_d = "~/.config/nvim/prettier-eslint_d.sh";
         };
         initExtra = ''
           AUTOLOAD="$HOME/.autoload"
@@ -57,6 +66,7 @@
           #    source "$file"
           # done
 
+          export EDITOR=nvim
           export CLICOLOR=1
           export CLICOLOR_FORCE=1
           export LSCOLORS=exfxcxdxbxegedabagacad
@@ -64,7 +74,7 @@
 
           zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
 
-          export PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin:$(npm config get prefix)/bin"
+          export PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin:/Users/pkrol/.npm_global/bin:$HOME/.krew/bin:/opt/homebrew/bin"
 
           eval "$(starship init zsh)"
           if [ -n "''${NVIM_LISTEN_ADDRESS+x}" ]; then
