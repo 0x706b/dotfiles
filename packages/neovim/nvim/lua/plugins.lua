@@ -245,5 +245,12 @@ require("lazy").setup({
     config = function()
       require("config.nvim-metals")
     end
+  },
+
+  {
+    "mvllow/modes.nvim",
+    config = function()
+      require("config.modes")
+    end
   }
 })

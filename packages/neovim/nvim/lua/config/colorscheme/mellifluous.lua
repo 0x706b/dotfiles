@@ -41,12 +41,12 @@ M.init = function()
 
   M.galaxyline_colors = {
     bg = colors.bg.hex,
-    bg0 = colors.bg:lightened(5).hex,
-    bg1 = colors.bg:lightened(10).hex,
+    bg0 = colors.bg:lightened(4).hex,
+    bg1 = colors.bg:lightened(8).hex,
     fg = colors.fg.hex,
-    fg0 = colors.fg:darkened(5).hex,
-    fg1 = colors.fg:darkened(10).hex,
-    fg2 = colors.fg:darkened(15).hex,
+    fg0 = colors.fg:darkened(4).hex,
+    fg1 = colors.fg:darkened(8).hex,
+    fg2 = colors.fg:darkened(16).hex,
     b = {
       red = colors.red.hex,
       yellow = colors.yellow.hex,
