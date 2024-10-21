@@ -21,6 +21,8 @@ opt.relativenumber = true
 opt.hidden = true
 opt.cursorline = true
 
+-- vim.g.node_host_prog = string.gsub(vim.fn.system("npm prefix --location=global"), "%s+", "") .. "/lib/node_modules/neovim/bin/cli.js"
+
 api.nvim_create_autocmd("WinEnter", {
   callback = function()
     opt_local.cursorline = true

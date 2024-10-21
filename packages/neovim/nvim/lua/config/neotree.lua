@@ -1,9 +1,9 @@
 require("neo-tree").setup({
   popup_border_style = "rounded",
   window = {
-    win_options = {
-      winblend = 20
-    },
+    -- win_options = {
+    --   winblend = 20
+    -- },
     mappings = {
       ["l"] = "open",
       ["h"] = "close_node"

@@ -2,6 +2,7 @@
 {
   programs.neovim = {
     enable = true;
+    withNodeJs = true;
     # package = pkgs.neovim;
   };
   home.file.".config/nvim" = {

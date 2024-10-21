@@ -9,6 +9,13 @@ M.init = function()
     mellifluous = {
       bg_contrast = "hard",
     },
+    color_overrides = {
+      dark = {
+        bg = function(bg)
+          return bg:darkened(2)
+        end
+      }
+    },
     plugins = {
       treesitter = true
     },

@@ -14,6 +14,12 @@ lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, {
   border = "rounded"
 })
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+capabilities.textDocument.colorProvider = {
+  dynamicRegistration = true
+}
+
 api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
   callback = function()
     vim.diagnostic.open_float(nil, { focus = false })
