@@ -1,9 +1,9 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   programs.neovim = {
     enable = true;
     withNodeJs = true;
-    # package = pkgs.neovim;
+    package = pkgs.neovim;
   };
   home.file.".config/nvim" = {
     source = config.lib.file.mkOutOfStoreSymlink /home/peter/dotfiles/packages/neovim/nvim;

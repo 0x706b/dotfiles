@@ -14,11 +14,20 @@ require("lazy").setup({
   { "projekt0n/github-nvim-theme", enabled = false },
 
   {
+    "catppuccin/nvim",
+    priority = 9999,
+    config = function()
+      require("config.colorscheme.current_color").set_colorscheme("catppuccin")
+    end
+  },
+
+  {
     'ramojus/mellifluous.nvim',
     priority = 9999,
     config = function()
       require("config.colorscheme.current_color").set_colorscheme("mellifluous")
-    end
+    end,
+    enabled = false
   },
 
   { 'sainnhe/everforest', enabled = false },
@@ -183,6 +192,7 @@ require("lazy").setup({
 
   {
     'lukas-reineke/indent-blankline.nvim',
+    commit = "e7a4442e055ec953311e77791546238d1eaae507",
     config = function()
       require'config.indent-blankline'
     end
@@ -275,9 +285,6 @@ require("lazy").setup({
   {
     "folke/noice.nvim",
     event = "VeryLazy",
-    opts = {
-      -- add any options here
-    },
     dependencies = {
     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
     "MunifTanjim/nui.nvim",
@@ -285,9 +292,13 @@ require("lazy").setup({
     --   `nvim-notify` is only needed, if you want to use the notification view.
     --   If not available, we use `mini` as the fallback
     "rcarriga/nvim-notify",
-    }
+    },
+    config = function()
+      require("config.noice")
+    end
   },
+
   {
     "folke/drop.nvim"
-  }
+  },
 })
