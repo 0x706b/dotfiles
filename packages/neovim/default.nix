@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, user, ... }:
 {
   programs.neovim = {
     enable = true;
@@ -6,6 +6,6 @@
     package = pkgs.neovim;
   };
   home.file.".config/nvim" = {
-    source = config.lib.file.mkOutOfStoreSymlink /Users/pkrol/dotfiles/packages/neovim/nvim;
+    source = config.lib.file.mkOutOfStoreSymlink /home/peter/dotfiles/packages/neovim/nvim;
   };
 }

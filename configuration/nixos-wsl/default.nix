@@ -32,9 +32,7 @@
   };
 
   nixpkgs.overlays = [
-    (self: super: {
-      neovim = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
-    })
+    inputs.neovim-nightly-overlay.overlays.default
   ];
 
   wsl.enable = true;

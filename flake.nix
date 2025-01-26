@@ -29,7 +29,7 @@
       allowUnsupportedSystem = false;
     };
 
-    user = "pkrol";
+    user = "peter";
     hm = home-manager.lib.hm;
     ghc-version = "982";
   in

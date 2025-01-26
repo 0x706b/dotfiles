@@ -1,7 +1,7 @@
 { user, nil, system, ghc-version, isWsl, ... }:
 {
   home-manager = {
-    extraSpecialArgs = { inherit isWsl; };
+    extraSpecialArgs = { inherit isWsl user; };
     useGlobalPkgs = true;
     useUserPackages = true;
     users.${user} = { pkgs, ... }: {
@@ -9,7 +9,6 @@
         [ ../../packages/neovim
           ../../packages/kitty
           ../../packages/tmux
-          ../../packages/yabai
           ../../packages/vscode-server
           ../../packages/git
         ];
@@ -74,6 +73,9 @@
         enable = true;
         shellAliases = {
           v = "nvim";
+          "v." = "nvim $HOME/dotfiles/flake.nix";
+          ga = "git add --all";
+          gc = "git commit";
           l = "exa -hla --icons";
           lt = "exa -hla --icons --tree --level 2 --git-ignore";
           prettier-eslint_d = "~/.config/nvim/prettier-eslint_d.sh";
@@ -86,6 +88,7 @@
           #    source "$file"
           # done
 
+          export EDITOR=nvim
           export CLICOLOR=1
           export CLICOLOR_FORCE=1
           export LSCOLORS=exfxcxdxbxegedabagacad

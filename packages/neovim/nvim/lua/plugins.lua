@@ -26,7 +26,7 @@ require("lazy").setup({
     config = function()
       require("config.colorscheme.current_color").set_colorscheme("catppuccin")
     end,
-    enabled = true
+    enabled = false
   },
 
   {
@@ -35,7 +35,7 @@ require("lazy").setup({
     config = function()
       require("config.colorscheme.current_color").set_colorscheme("mellifluous")
     end,
-    enabled = false
+    enabled = true
   },
 
   { 'sainnhe/everforest', enabled = false },
@@ -344,5 +344,22 @@ require("lazy").setup({
     config = function ()
       require("config.nvim-colorizer")
     end
-  }
+  },
+
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function ()
+      require("config.todo-comments")
+    end
+  },
+
+  -- {
+  --   'saghen/blink.cmp',
+  --   lazy = false,
+  --   version = "0.5.1",
+  --   config = function ()
+  --     require("config.blink")
+  --   end
+  -- }
 })
