@@ -10,16 +10,19 @@
           ../../packages/kitty
           ../../packages/tmux
           ../../packages/git
+          ../../packages/warp
+          ../../packages/zellij
+          ../../packages/wezterm
         ];
       home.stateVersion = "22.05";
       home.packages =
         with pkgs; [ # Starship terminal prompt
           starship
-          haskell.compiler."ghc${ghc-version}"
-          haskell.packages."ghc${ghc-version}".haskell-language-server
-          ghcid
-          stack
-          haskellPackages.cabal-install
+          # haskell.compiler."ghc${ghc-version}"
+          # haskell.packages."ghc${ghc-version}".haskell-language-server
+          # ghcid
+          # stack
+          # haskellPackages.cabal-install
           nil.packages.${system}.default
           eza
           gnupg
@@ -35,7 +38,6 @@
           ripgrep
           minikube
           docker
-          edgedb
           clang
           llvmPackages.libcxxStdenv
           git-lfs
@@ -47,16 +49,26 @@
           gitui
           google-cloud-sdk
           (import ../../packages/upfind.nix pkgs)
+          (import ../../packages/launch-nvim-in-kitty.nix pkgs)
+          go
+          yamllint
+          postgresql_17
+          tilt
+          alacritty
+          # sops
         ];
       programs.zsh = {
         enable = true;
         shellAliases = {
+          # nvim = "kitten @ --to unix:/tmp/nvim-client launch --copy-env --cwd $PWD launch-nvim-in-kitty";
+          ngdev = "$HOME/dev/ng/ng-delivery/ngdev";
           "v." = "nvim $HOME/dotfiles/flake.nix";
           ga = "git add --all";
           gc = "git commit";
           v = "nvim";
           l = "exa -hla --icons";
           lt = "exa -hla --icons --tree --level 2 --git-ignore";
+          "rebuild." = "pushd ~/dotfiles; sudo darwin-rebuild switch --flake .#MacBook-Pro; popd";
         };
         initExtra = ''
           AUTOLOAD="$HOME/.autoload"
@@ -74,12 +86,20 @@
 
           zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
 
-          export PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin:/Users/pkrol/.npm_global/bin:$HOME/.krew/bin:/opt/homebrew/bin"
+          export PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin:/Users/pkrol/.npm_global/bin:$HOME/.krew/bin:/opt/homebrew/bin:$HOME/go/bin"
 
           eval "$(starship init zsh)"
           if [ -n "''${NVIM_LISTEN_ADDRESS+x}" ]; then
             export COLORTERM="truecolor"
           fi
+
+          printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "zsh" }}\x9c'
+
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+          typeset -g ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=15"
         '';
         zplug = {
           enable = true;

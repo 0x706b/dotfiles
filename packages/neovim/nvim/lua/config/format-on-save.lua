@@ -8,6 +8,11 @@ local prettier_eslint = formatters.if_file_exists({
     cmd = function ()
       local dirname = vim.fn.expand("%:p:h")
       local handle = io.popen("cd " .. dirname .. " && upfind eslint.config.js")
+
+      if handle == nil then
+        return
+      end
+
       local output = handle:read("*a")
       handle:close()
 

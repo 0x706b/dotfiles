@@ -35,7 +35,27 @@ require("lazy").setup({
     config = function()
       require("config.colorscheme.current_color").set_colorscheme("mellifluous")
     end,
-    enabled = true
+    enabled = false
+  },
+
+  {
+    'baliestri/aura-theme',
+    lazy = false,
+    priority = 9999,
+    config = function(plugin)
+      vim.opt.rtp:append(plugin.dir .. "/packages/neovim")
+      require("config.colorscheme.current_color").set_colorscheme("aura")
+    end,
+    enabled = false,
+  },
+
+  {
+    "vague2k/vague.nvim",
+    priority = 9999,
+    config = function ()
+      require("config.colorscheme.current_color").set_colorscheme("vague")
+    end,
+    enabled = true,
   },
 
   { 'sainnhe/everforest', enabled = false },
@@ -347,19 +367,15 @@ require("lazy").setup({
   },
 
   {
-    "folke/todo-comments.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function ()
-      require("config.todo-comments")
-    end
-  },
-
-  -- {
-  --   'saghen/blink.cmp',
-  --   lazy = false,
-  --   version = "0.5.1",
-  --   config = function ()
-  --     require("config.blink")
-  --   end
-  -- }
+    "swaits/zellij-nav.nvim",
+    lazy = true,
+    event = "VeryLazy",
+    keys = {
+      { "<c-h>", "<cmd>ZellijNavigateLeftTab<cr>",  { silent = true, desc = "navigate left or tab"  } },
+      { "<c-j>", "<cmd>ZellijNavigateDown<cr>",  { silent = true, desc = "navigate down"  } },
+      { "<c-k>", "<cmd>ZellijNavigateUp<cr>",    { silent = true, desc = "navigate up"    } },
+      { "<c-l>", "<cmd>ZellijNavigateRightTab<cr>", { silent = true, desc = "navigate right or tab" } },
+    },
+    opts = {},
+  }
 })

@@ -13,7 +13,7 @@ opt.shiftwidth = 2
 opt.expandtab = true
 opt.mouse = { a = true }
 opt.cmdheight = 2
-opt.updatetime = 300
+opt.updatetime = 150
 opt.shortmess:append({ c = true })
 opt.signcolumn = "yes"
 opt.number = true

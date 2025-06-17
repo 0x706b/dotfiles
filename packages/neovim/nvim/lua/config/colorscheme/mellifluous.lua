@@ -7,20 +7,19 @@ M.init = function()
   mellifluous.setup({
     color_set = 'mellifluous',
     mellifluous = {
-      bg_contrast = "hard",
       color_overrides = {
         dark = {
           bg = function (bg)
-            return bg:darkened(2)
+            return bg:lightened(2)
           end
         }
       }
     },
     color_overrides = {
       dark = {
-        bg = function(bg)
-          return bg:darkened(2)
-        end
+        -- bg = function(bg)
+        --   return bg:darkened(2)
+        -- end
       }
     },
     plugins = {

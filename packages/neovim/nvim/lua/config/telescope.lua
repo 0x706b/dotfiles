@@ -45,7 +45,8 @@ map(
 map(
   "n", "<leader>f",
   function()
-    builtin.find_files(dropdown_theme)
+    builtin.git_files(dropdown_theme)
   end,
   { noremap = true, silent = true }
 )
+
