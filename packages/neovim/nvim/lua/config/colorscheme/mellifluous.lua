@@ -15,13 +15,6 @@ M.init = function()
         }
       }
     },
-    color_overrides = {
-      dark = {
-        -- bg = function(bg)
-        --   return bg:darkened(2)
-        -- end
-      }
-    },
     plugins = {
       treesitter = true
     },

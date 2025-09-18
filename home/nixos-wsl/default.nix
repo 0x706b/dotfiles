@@ -1,28 +1,32 @@
 { user, nil, system, ghc-version, isWsl, ... }:
-{
+let
+  extraImports = if isWsl then [ ../packages/vscode-server ] else [];
+in {
   home-manager = {
+    home.enableNixpkgsReleaseCheck = false;
     extraSpecialArgs = { inherit isWsl user; };
     useGlobalPkgs = true;
     useUserPackages = true;
     users.${user} = { pkgs, ... }: {
       imports =
-        [ ../../packages/neovim
-          ../../packages/kitty
-          ../../packages/tmux
-          ../../packages/vscode-server
-          ../../packages/git
-        ];
+        [ ../packages/neovim
+          ../packages/kitty
+          ../packages/tmux
+          ../packages/vscode-server
+          ../packages/git
+          ../packages/zellij
+        ] ++ extraImports;
 
       home.stateVersion = "22.05";
 
       home.packages =
         with pkgs; [ # Starship terminal prompt
           starship
-          haskell.compiler."ghc${ghc-version}"
-          haskell.packages."ghc${ghc-version}".haskell-language-server
-          ghcid
-          stack
-          haskellPackages.cabal-install
+          # haskell.compiler."ghc${ghc-version}"
+          # haskell.packages."ghc${ghc-version}".haskell-language-server
+          # ghcid
+          # stack
+          # haskellPackages.cabal-install
           nil.packages.${system}.default
           eza
           gnupg
@@ -38,7 +42,7 @@
           kubectl
           minikube
           docker
-          edgedb
+          gel
           nodePackages.vscode-langservers-extracted
           ripgrep
           lua-language-server
@@ -77,7 +81,7 @@
           lt = "exa -hla --icons --tree --level 2 --git-ignore";
           prettier-eslint_d = "~/.config/nvim/prettier-eslint_d.sh";
         };
-        initExtra = ''
+        initContent = ''
           AUTOLOAD="$HOME/.autoload"
           autoload -U promptinit; promptinit
           # Source all files in $AUTOLOAD having file extension .zsh
@@ -98,6 +102,8 @@
           if [ -n "''${NVIM_LISTEN_ADDRESS+x}" ]; then
             export COLORTERM="truecolor"
           fi
+
+          # export TERM=tmux-256color
         '';
 
         zplug = {

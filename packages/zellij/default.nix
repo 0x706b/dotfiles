@@ -21,7 +21,7 @@
       };
 
       themes.mellifluous = {
-        bg = "#1D1D1D";
+        bg = "#151515";
         fg = "#C8C8C8";
         red = "#D59192";
         green = "#B3B393";
@@ -30,7 +30,7 @@
         magenta = "#B99BB5";
         orange = "#BFAF8E";
         cyan = "#A8A1BE";
-        black = "#1D1D1D";
+        black = "#151515";
         white = "#5B5B5B";
       };
 

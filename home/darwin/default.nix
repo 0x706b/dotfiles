@@ -68,7 +68,7 @@
           v = "nvim";
           l = "exa -hla --icons";
           lt = "exa -hla --icons --tree --level 2 --git-ignore";
-          "rebuild." = "pushd ~/dotfiles; sudo darwin-rebuild switch --flake .#MacBook-Pro; popd";
+          "rebuild." = "pushd ~/dotfiles; sudo nixos-rebuild switch --flake .; popd";
         };
         initExtra = ''
           AUTOLOAD="$HOME/.autoload"

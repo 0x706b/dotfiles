@@ -31,7 +31,6 @@
 
     user = "peter";
     hm = home-manager.lib.hm;
-    ghc-version = "982";
   in
   {
     darwinConfigurations.MacBook-Pro =
@@ -40,7 +39,7 @@
       isWsl = false;
     in darwin.lib.darwinSystem {
       inherit system;
-      specialArgs = { inherit inputs nixpkgsConfig user system nil hm isWsl ghc-version; };
+      specialArgs = { inherit inputs nixpkgsConfig user system nil hm isWsl; };
       modules = [
         home-manager.darwinModules.home-manager
         ./configuration/darwin
@@ -55,12 +54,12 @@
       isWsl = true;
     in nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit inputs nixpkgsConfig user system nil hm isWsl ghc-version; };
+      specialArgs = { inherit inputs nixpkgsConfig user system nil hm isWsl; };
       modules = [
         nixos-wsl.nixosModules.default
         home-manager.nixosModules.home-manager
         ./configuration/nixos-wsl
-        ./home/nixos-wsl
+        ./home
       ];
     };
   };
