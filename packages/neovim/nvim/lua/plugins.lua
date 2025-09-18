@@ -55,7 +55,16 @@ require("lazy").setup({
     config = function ()
       require("config.colorscheme.current_color").set_colorscheme("vague")
     end,
-    enabled = true,
+    enabled = false,
+  },
+
+  {
+    "rebelot/kanagawa.nvim",
+    priority = 9999,
+    config = function ()
+      require("config.colorscheme.current_color").set_colorscheme("kanagawa")
+    end,
+    enabled = true
   },
 
   { 'sainnhe/everforest', enabled = false },

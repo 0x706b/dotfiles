@@ -10,7 +10,7 @@ M.init = function()
       color_overrides = {
         dark = {
           bg = function (bg)
-            return bg:lightened(2)
+            return bg:darkened(2)
           end
         }
       }
