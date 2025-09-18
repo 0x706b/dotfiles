@@ -4,7 +4,7 @@
     enable = true;
     enableZshIntegration = true;
     settings = {
-      theme = "mellifluous";
+      theme = "kanagawa";
 
       themes.vague = {
         bg = "#141415";
@@ -46,6 +46,20 @@
         cyan = "#5a418a";
         black = "#e1e1e1";
         white = "#919191";
+      };
+
+      themes.kanagawa = {
+        bg = "#1f1f28";
+        fg = "#dcd7ba";
+        red = "#c34043";
+        green = "#76946a";
+        blue = "#7e9cd8";
+        yellow = "#c8c093";
+        magenta = "#957fb8";
+        orange = "#c0a36e";
+        cyan = "#6a9589";
+        black = "#090618";
+        white = "#727169";
       };
 
       default_mode = "locked";
