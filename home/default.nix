@@ -1,9 +1,8 @@
-{ user, nil, system, ghc-version, isWsl, ... }:
+{ user, nil, system, isWsl, ... }:
 let
   extraImports = if isWsl then [ ../packages/vscode-server ] else [];
 in {
   home-manager = {
-    home.enableNixpkgsReleaseCheck = false;
     extraSpecialArgs = { inherit isWsl user; };
     useGlobalPkgs = true;
     useUserPackages = true;
@@ -77,11 +76,14 @@ in {
         enable = true;
         shellAliases = {
           v = "nvim";
+          "v." = "nvim $HOME/dotfiles/flake.nix";
+          ga = "git add --all";
+          gc = "git commit";
           l = "exa -hla --icons";
           lt = "exa -hla --icons --tree --level 2 --git-ignore";
           prettier-eslint_d = "~/.config/nvim/prettier-eslint_d.sh";
         };
-        initContent = ''
+        initExtra = ''
           AUTOLOAD="$HOME/.autoload"
           autoload -U promptinit; promptinit
           # Source all files in $AUTOLOAD having file extension .zsh
@@ -89,6 +91,7 @@ in {
           #    source "$file"
           # done
 
+          export EDITOR=nvim
           export CLICOLOR=1
           export CLICOLOR_FORCE=1
           export LSCOLORS=exfxcxdxbxegedabagacad
@@ -102,8 +105,6 @@ in {
           if [ -n "''${NVIM_LISTEN_ADDRESS+x}" ]; then
             export COLORTERM="truecolor"
           fi
-
-          # export TERM=tmux-256color
         '';
 
         zplug = {

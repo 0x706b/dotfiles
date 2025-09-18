@@ -17,6 +17,7 @@
     curl
     socat
     gcc
+    iproute2
   ];
 
   environment.variables.editor = "vim";
@@ -33,6 +34,16 @@
 
   nixpkgs.overlays = [
     inputs.neovim-nightly-overlay.overlays.default
+    # (self: super: {
+    #   zellij = super.zellij.overrideAttrs (oldAttrs: {
+    #     src = pkgs.fetchFromGitHub {
+    #       owner = "zellij-org";
+    #       repo = "zellij";
+    #       rev = "v0.42.2";
+    #       hash = "sha256-O7BZlPSBWy+q349NYCUsw4Rb5X3xyl5Ar+a/uQPQhZY=";
+    #     };
+    #   });
+    # })
   ];
 
   wsl.enable = true;
