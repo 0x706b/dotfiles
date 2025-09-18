@@ -35,7 +35,7 @@ require("lazy").setup({
     config = function()
       require("config.colorscheme.current_color").set_colorscheme("mellifluous")
     end,
-    enabled = true
+    enabled = false
   },
 
   {
