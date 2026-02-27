@@ -62,6 +62,20 @@
         white = "#727169";
       };
 
+      themes.kanagawa-dragon = {
+        bg = "#181616";
+        fg = "#c5c9c5";
+        red = "#C4746E";
+        green = "#8A9A7B";
+        blue = "#7e9cd8";
+        yellow = "#C8C093";
+        magenta = "#A292A3";
+        orange = "#C4B28A";
+        cyan = "#8EA4A2";
+        black = "#181616";
+        white = "#727169";
+      };
+
       default_mode = "locked";
     };
   };

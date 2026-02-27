@@ -64,7 +64,7 @@ require("lazy").setup({
     config = function ()
       require("config.colorscheme.current_color").set_colorscheme("kanagawa")
     end,
-    enabled = true
+    enabled = true,
   },
 
   { 'sainnhe/everforest', enabled = false },
@@ -321,17 +321,17 @@ require("lazy").setup({
     lazy = false, -- This plugin is already lazy
   },
 
-  {
-    'luckasRanarison/tailwind-tools.nvim',
-    name = "tailwind-tools",
-    build = ":UpdateRemotePlugins",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-telescope/telescope.nvim", -- optional
-      "neovim/nvim-lspconfig", -- optional
-    },
-    opts = {} -- your configuration
-  },
+  -- {
+  --   'luckasRanarison/tailwind-tools.nvim',
+  --   name = "tailwind-tools",
+  --   build = ":UpdateRemotePlugins",
+  --   dependencies = {
+  --     "nvim-treesitter/nvim-treesitter",
+  --     "nvim-telescope/telescope.nvim", -- optional
+  --     "neovim/nvim-lspconfig", -- optional
+  --   },
+  --   opts = {} -- your configuration
+  -- },
 
   {
     "folke/noice.nvim",
@@ -361,12 +361,12 @@ require("lazy").setup({
     end,
   },
 
-  -- {
-  --   "petertriho/nvim-scrollbar",
-  --   config = function ()
-  --     require("config.nvim-scrollbar")
-  --   end
-  -- },
+  {
+    "petertriho/nvim-scrollbar",
+    config = function ()
+      require("config.nvim-scrollbar")
+    end
+  },
 
   {
     "norcalli/nvim-colorizer.lua",
@@ -386,5 +386,12 @@ require("lazy").setup({
       { "<c-l>", "<cmd>ZellijNavigateRightTab<cr>", { silent = true, desc = "navigate right or tab" } },
     },
     opts = {},
+  },
+
+  {
+    "p00f/clangd_extensions.nvim",
+    config = function ()
+      -- require("config.clangd_extensions")
+    end
   }
 })
