@@ -31,6 +31,7 @@
 
     user = "peter";
     hm = home-manager.lib.hm;
+    ghc-version = "912";
   in
   {
     darwinConfigurations.MacBook-Pro =
@@ -54,7 +55,7 @@
       isWsl = true;
     in nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit inputs nixpkgsConfig user system nil hm isWsl; };
+      specialArgs = { inherit inputs nixpkgsConfig user system nil hm isWsl ghc-version; };
       modules = [
         nixos-wsl.nixosModules.default
         home-manager.nixosModules.home-manager

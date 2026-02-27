@@ -20,6 +20,8 @@ opt.number = true
 opt.relativenumber = true
 opt.hidden = true
 opt.cursorline = true
+opt.colorcolumn = "120"
+opt.laststatus = 3
 
 -- vim.g.node_host_prog = string.gsub(vim.fn.system("npm prefix --location=global"), "%s+", "") .. "/lib/node_modules/neovim/bin/cli.js"
 

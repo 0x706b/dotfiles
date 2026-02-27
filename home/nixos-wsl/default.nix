@@ -32,7 +32,7 @@ in {
           gnupg
           gh
           fzf
-          nodejs_22
+          nodejs_24
           yarn
           bat
           nix-prefetch-git
@@ -60,6 +60,8 @@ in {
           rustc
           rust-analyzer
           cargo
+          go
+          opencode
           (writeShellScriptBin "upfind" ''
             DIR=$PWD
 
