@@ -6,13 +6,13 @@
     useUserPackages = true;
     users.${user} = { pkgs, ... }: {
       imports =
-        [ ../../packages/neovim
-          ../../packages/kitty
-          ../../packages/tmux
-          ../../packages/git
-          ../../packages/warp
-          ../../packages/zellij
-          ../../packages/wezterm
+        [ ../modules/neovim
+          ../modules/kitty
+          ../modules/tmux
+          ../modules/git
+          ../modules/warp
+          ../modules/zellij
+          ../modules/wezterm
         ];
       home.stateVersion = "22.05";
       home.packages =
@@ -49,7 +49,6 @@
           gitui
           google-cloud-sdk
           (import ../../packages/upfind.nix pkgs)
-          (import ../../packages/launch-nvim-in-kitty.nix pkgs)
           go
           yamllint
           postgresql_17
@@ -60,7 +59,6 @@
       programs.zsh = {
         enable = true;
         shellAliases = {
-          # nvim = "kitten @ --to unix:/tmp/nvim-client launch --copy-env --cwd $PWD launch-nvim-in-kitty";
           ngdev = "$HOME/dev/ng/ng-delivery/ngdev";
           "v." = "nvim $HOME/dotfiles/flake.nix";
           ga = "git add --all";

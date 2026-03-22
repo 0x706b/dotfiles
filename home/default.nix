@@ -1,75 +1,57 @@
-{ user, nil, system, isWsl, ghc-version, ... }:
+{ inputs, user, isWsl, ghc-version, ... }:
 let
-  extraImports = if isWsl then [ ../packages/vscode-server ] else [];
+  extraImports = if isWsl then [ ./modules/vscode-server ] else [];
 in {
   home-manager = {
-    extraSpecialArgs = { inherit isWsl user; };
+    extraSpecialArgs = { inherit inputs isWsl user; };
     useGlobalPkgs = true;
     useUserPackages = true;
     users.${user} = { pkgs, ... }: {
       imports =
-        [ ../packages/neovim
-          ../packages/kitty
-          ../packages/tmux
-          ../packages/vscode-server
-          ../packages/git
-          ../packages/zellij
+        [ ./modules/neovim
+          ./modules/kitty
+          ./modules/tmux
+          ./modules/git
+          ./modules/zellij
+          ./modules/hypr
+          ./modules/wezterm
+          ./modules/npm
+          ./modules/yazi
         ] ++ extraImports;
 
-      home.stateVersion = "22.05";
+      home.stateVersion = "26.05";
+
+      home.file.".jdk/zulu25".source = pkgs.zulu25;
+      home.file.".jdk/zulu".source = pkgs.zulu;
+
+      stylix = {
+        autoEnable = true;
+        targets.neovim.enable = false;
+        targets.waybar = {
+          addCss = false;
+        };
+      };
 
       home.packages =
-        with pkgs; [ # Starship terminal prompt
-          starship
-          haskell.compiler."ghc${ghc-version}"
-          haskell.packages."ghc${ghc-version}".haskell-language-server
-          ghcid
-          # stack
-          haskellPackages.cabal-install
-          nil.packages.${system}.default
-          eza
+        with pkgs; [
+          # Utilities
+          gitui
+          unetbootin
+          protonvpn-gui
+          qbittorrent
+          protontricks
+          gnomeExtensions.solaar-extension
+          solaar
+          awakened-poe-trade
           gnupg
-          gh
           fzf
-          nodejs_24
-          yarn
           bat
-          nix-prefetch-git
-          nodePackages.pnpm
-          woff2
-          ruby
-          kubectl
-          minikube
-          docker
-          gel
-          nodePackages.vscode-langservers-extracted
-          ripgrep
-          lua-language-server
-
-          ammonite
-          coursier
-          scala
-          scala-cli
-          sbt
-          scalafmt
-          metals
-          zulu
-          gradle
-
-          rustc
-          rust-analyzer
-          cargo
-          go
-          gel
           unzip
-
-          clang
-          clang-tools
-
-          gnumake
-
-          opencode
-
+          fastfetch
+          eza
+          ripgrep
+          woff2
+          gel
           (writeShellScriptBin "upfind" ''
             DIR=$PWD
 
@@ -81,6 +63,99 @@ in {
 
             echo "$RESULT"
           '')
+
+          # Browsers
+          google-chrome
+          firefox
+          brave
+
+          discord
+
+          _1password-gui
+          _1password-cli
+
+          modrinth-app-rewrapped
+
+          # Audio
+          qjackctl
+          qpwgraph
+          bitwig-studio
+          spotify
+
+          # Wine
+          wineWow64Packages.yabridge
+          yabridge
+          yabridgectl
+          winetricks
+          bottles
+
+          # GPU
+          vulkan-tools
+          lact
+
+          # Shell
+          kitty
+          starship
+
+          # Haskell
+          haskell.compiler."ghc${ghc-version}"
+          haskell.packages."ghc${ghc-version}".haskell-language-server
+
+          # Nix
+          nix-prefetch-git
+          inputs.nil.packages.${pkgs.stdenv.hostPlatform.system}.default
+
+          # GitHub
+          gh
+
+          # JavaScript
+          nodejs_24
+          yarn
+          nodePackages.pnpm
+          nodePackages.vscode-langservers-extracted
+
+          # Lua
+          lua-language-server
+
+          # Ruby
+          ruby
+
+          # Kubernetes
+          kubectl
+          minikube
+
+          # Docker
+          docker
+
+          # Java
+          # zulu
+
+          # Scala
+          ammonite
+          coursier
+          scala
+          scala-cli
+          sbt
+          scalafmt
+          metals
+          gradle
+
+          # Rust
+          rustc
+          rust-analyzer
+          cargo
+
+          # Go
+          go
+          gel
+
+          # C++
+          clang
+          clang-tools
+          gnumake
+
+          # AI
+          opencode
         ];
 
       programs.zsh = {
@@ -93,8 +168,19 @@ in {
           l = "exa -hla --icons";
           lt = "exa -hla --icons --tree --level 2 --git-ignore";
           prettier-eslint_d = "~/.config/nvim/prettier-eslint_d.sh";
+          "rebuild." = ''
+            pushd ~/dotfiles
+            sudo nixos-rebuild switch --flake .
+            popd
+          '';
+          clean-generations = ''
+            pushd ~/dotfiles
+            sudo nix-collect-garbage --delete-old -d
+            sudo nixos-rebuild switch --flake .
+            popd
+          '';
         };
-        initExtra = ''
+        initContent = ''
           AUTOLOAD="$HOME/.autoload"
           autoload -U promptinit; promptinit
           # Source all files in $AUTOLOAD having file extension .zsh
@@ -117,6 +203,10 @@ in {
             export COLORTERM="truecolor"
           fi
 
+          fastfetch
+
+          export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
+        '' + pkgs.lib.optionalString isWsl ''
           # Configure ssh forwarding
           export SSH_AUTH_SOCK=$HOME/.ssh/agent.sock
           # need `ps -ww` to get non-truncated command for matching
@@ -147,6 +237,15 @@ in {
               { name = "zsh-users/zsh-autosuggestions"; }
               { name = "chrissicool/zsh-256color"; }
             ];
+        };
+      };
+
+      fonts.fontconfig = {
+        enable = true;
+        defaultFonts = {
+          monospace = [ "PragmataPro Mono Liga" ];
+          sansSerif = [ "SFProDisplay Nerd Font" ];
+          serif = [ "New York Nerd Font" ];
         };
       };
     };

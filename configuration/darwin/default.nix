@@ -1,4 +1,4 @@
-{ config, pkgs, user, nixpkgsConfig, inputs, ... }:
+{ config, pkgs, user, inputs, ... }:
 
 {
   environment.systemPackages =
@@ -11,7 +11,11 @@
     nix-daemon.enable = true;
   };
 
-  nixpkgs.config = nixpkgsConfig;
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnsupportedSystem = false;
+  };
+
   nixpkgs.overlays = [
     inputs.neovim-nightly-overlay.overlays.default
   ];
