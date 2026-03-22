@@ -152,12 +152,13 @@ config.inactive_pane_hsb = {
 
 config.font = wezterm.font 'PragmataPro Mono Liga'
 
-config.freetype_interpreter_version = 35
-config.freetype_load_flags = 'NO_HINTING'
-config.freetype_load_target = 'Light'
-config.dpi = 72
-config.line_height = 1.1
+-- config.freetype_interpreter_version = 35
+-- config.freetype_load_flags = 'NO_HINTING'
+-- config.freetype_load_target = 'Light'
+-- config.dpi = 92
+config.line_height = 1.0
 
 config.enable_tab_bar = false
+config.term = "wezterm"
 
 return config

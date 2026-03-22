@@ -1,0 +1,228 @@
+{ user, inputs, isWsl, ... }:
+{
+  home-manager = {
+    extraSpecialArgs = { inherit user inputs isWsl; };
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.${user} = { pkgs, ... }: {
+      imports =
+        [ ../packages/neovim
+          # ../packages/kitty
+          # ../packages/tmux
+          # ../packages/vscode-server
+          ../packages/git
+          ../packages/kitty
+        ];
+
+      home.stateVersion = "25.11";
+      home.packages =
+        with pkgs; [
+          firefox
+          kdePackages.dolphin
+          wofi
+          starship
+	  waybar
+	  hyprpaper
+          # haskell.compiler."ghc${ghc-version}"
+          # haskell.packages."ghc${ghc-version}".haskell-language-server
+          # ghcid
+          # stack
+          # haskellPackages.cabal-install
+          inputs.nil.packages.${pkgs.stdenv.hostPlatform.system}.default
+          eza
+          gnupg
+          gh
+          fzf
+          nodejs
+          yarn
+          bat
+          nix-prefetch-git
+          nodePackages.pnpm
+          woff2
+          ruby
+          kubectl
+          minikube
+          docker
+          # edgedb
+          nodePackages.vscode-langservers-extracted
+          ripgrep
+          lua-language-server
+
+          # ammonite
+          # coursier
+          # scala
+          # scala-cli
+          # sbt
+          # scalafmt
+          # metals
+          # zulu
+          # gradle
+
+          # rustc
+          # rust-analyzer
+          # cargo
+          (writeShellScriptBin "upfind" ''
+            DIR=$PWD
+
+            while
+              RESULT=$(find "$DIR"/ -maxdepth 1 -name "$@" )
+              # echo "Debugging upfind - search in $DIR gives: $RESULT"
+              [[ -z $RESULT ]] && [[ "$DIR" != "/" ]]
+            do DIR=$(dirname "$DIR"); done
+
+            echo "$RESULT"
+          '')
+        ];
+
+      programs.zsh = {
+        enable = true;
+        shellAliases = {
+          v = "nvim";
+          l = "exa -hla --icons";
+          lt = "exa -hla --icons --tree --level 2 --git-ignore";
+          prettier-eslint_d = "~/.config/nvim/prettier-eslint_d.sh";
+        };
+        initExtra = ''
+          AUTOLOAD="$HOME/.autoload"
+          autoload -U promptinit; promptinit
+          # Source all files in $AUTOLOAD having file extension .zsh
+          # for file in $AUTOLOAD/*.zsh; do
+          #    source "$file"
+          # done
+
+          export CLICOLOR=1
+          export CLICOLOR_FORCE=1
+          export LSCOLORS=exfxcxdxbxegedabagacad
+          export LS_COLORS="di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+
+          zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
+
+          export PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin:$(npm config get prefix)/bin"
+
+          eval "$(starship init zsh)"
+          if [ -n "''${NVIM_LISTEN_ADDRESS+x}" ]; then
+            export COLORTERM="truecolor"
+          fi
+        '';
+
+        zplug = {
+          enable = true;
+          plugins =
+            [ { name = "mafredri/zsh-async"; tags = [ "from:github" "defer:0" ]; }
+              { name = "zsh-users/zsh-syntax-highlighting"; tags = [ "defer:2" ]; }
+              { name = "plugins/git"; tags = [ "from:oh-my-zsh" ]; }
+              { name = "lib/completion"; tags = [ "from:oh-my-zsh" ]; }
+              { name = "lib/history"; tags = [ "from:oh-my-zsh" ]; }
+              { name = "lib/theme-and-appearance"; tags = [ "from:oh-my-zsh" ]; }
+              { name = "zsh-users/zsh-autosuggestions"; }
+              { name = "chrissicool/zsh-256color"; }
+            ];
+        };
+      };
+      wayland.windowManager.hyprland = {
+        enable = true;
+        settings = {
+          "$terminal" = "kitty";
+          "$fileManager" = "dolphin";
+          "$menu" = "wofi --show drun";
+          exec-once = [
+            "$terminal"
+            "nm-applet &"
+            "waybar & hyprpaper & firefox"
+          ];
+          "$mainMod" = "SUPER";
+          bind = [
+            "$mainMod, Q, exec, $terminal"
+            "$mainMod, M, exit"
+            "$mainMod, C, killactive"
+            "$mainMod, E, exec, $fileManager"
+            "$mainMod, V, togglefloating,"
+            "$mainMod, R, exec, $menu"
+            "$mainMod, P, pseudo," # dwindle
+            "$mainMod, J, togglesplit," # dwindle
+            
+            # Move focus with mainMod + arrow keys
+            "$mainMod, left, movefocus, l"
+            "$mainMod, right, movefocus, r"
+            "$mainMod, up, movefocus, u"
+            "$mainMod, down, movefocus, d"
+            
+            # Switch workspaces with mainMod + [0-9]
+            "$mainMod, 1, workspace, 1"
+            "$mainMod, 2, workspace, 2"
+            "$mainMod, 3, workspace, 3"
+            "$mainMod, 4, workspace, 4"
+            "$mainMod, 5, workspace, 5"
+            "$mainMod, 6, workspace, 6"
+            "$mainMod, 7, workspace, 7"
+            "$mainMod, 8, workspace, 8"
+            "$mainMod, 9, workspace, 9"
+            "$mainMod, 0, workspace, 10"
+            
+            # Move active window to a workspace with mainMod + SHIFT + [0-9]
+            "$mainMod SHIFT, 1, movetoworkspace, 1"
+            "$mainMod SHIFT, 2, movetoworkspace, 2"
+            "$mainMod SHIFT, 3, movetoworkspace, 3"
+            "$mainMod SHIFT, 4, movetoworkspace, 4"
+            "$mainMod SHIFT, 5, movetoworkspace, 5"
+            "$mainMod SHIFT, 6, movetoworkspace, 6"
+            "$mainMod SHIFT, 7, movetoworkspace, 7"
+            "$mainMod SHIFT, 8, movetoworkspace, 8"
+            "$mainMod SHIFT, 9, movetoworkspace, 9"
+            "$mainMod SHIFT, 0, movetoworkspace, 10"
+            
+            # Example special workspace (scratchpad)
+            "$mainMod, S, togglespecialworkspace, magic"
+            "$mainMod SHIFT, S, movetoworkspace, special:magic"
+            
+            # Scroll through existing workspaces with mainMod + scroll
+            "$mainMod, mouse_down, workspace, e+1"
+            "$mainMod, mouse_up, workspace, e-1"
+          ];
+	  general = {
+	    gaps_in = 5;
+	    gaps_out = 20;
+
+	    border_size = 2;
+
+	    "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+	    "col.inactive_border" = "rgba(595959aa)";
+
+	    # Set to true enable resizing windows by clicking and dragging on borders and gaps
+	    resize_on_border = false;
+
+	    # Please see https://wiki.hypr.land/Configuring/Tearing/ before you turn this on
+	    allow_tearing = false;
+
+	    layout = "dwindle";
+	  };
+	  decoration = {
+	    rounding = 10;
+	    rounding_power = 2;
+
+	    # Change transparency of focused and unfocused windows
+	    active_opacity = 1.0;
+	    inactive_opacity = 1.0;
+
+	    shadow = {
+              enabled = true;
+              range = 4;
+              render_power = 3;
+              color = "rgba(1a1a1aee)";
+            };
+
+	    # https://wiki.hypr.land/Configuring/Variables/#blur
+	    blur = {
+              enabled = true;
+              size = 3;
+              passes = 1;
+
+              vibrancy = 0.1696;
+            };
+          };
+        };
+      };
+    };
+  };
+}
+

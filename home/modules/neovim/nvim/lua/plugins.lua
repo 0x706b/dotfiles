@@ -195,7 +195,7 @@ require("lazy").setup({
 
   {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.6',
+    tag = 'v0.2.1',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
       require("config.telescope")
@@ -272,11 +272,18 @@ require("lazy").setup({
 
   {
     'nvim-treesitter/nvim-treesitter',
+    branch = "master",
     run = ':TSUpdate',
-    dependencies = { 'nvim-treesitter/playground' },
+    dependencies = {
+      'JoosepAlviste/nvim-ts-context-commentstring',
+      'nvim-treesitter/playground',
+    },
     config = function ()
+      require('ts_context_commentstring').setup({
+        enable_autocmd = false,
+      })
       require'config.treesitter'
-    end
+    end,
   },
 
   {
@@ -285,8 +292,6 @@ require("lazy").setup({
       require("config.nvim-ts-autotag")
     end
   },
-
-  "JoosepAlviste/nvim-ts-context-commentstring",
 
   {
     'windwp/nvim-autopairs',
