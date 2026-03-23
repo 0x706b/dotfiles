@@ -1,6 +1,16 @@
 { inputs, user, isWsl, ghc-version, ... }:
 let
-  extraImports = if isWsl then [ ./modules/vscode-server ] else [];
+  extraImports =
+    if isWsl
+    then
+    [ ./modules/vscode-server ]
+    else
+    [ ./home/nixos
+      ./modules/yazi
+      ./modules/hypr
+      ./modules/kitty
+      ./modules/wezterm
+    ];
 in {
   home-manager = {
     extraSpecialArgs = { inherit inputs isWsl user; };
@@ -9,28 +19,16 @@ in {
     users.${user} = { pkgs, ... }: {
       imports =
         [ ./modules/neovim
-          ./modules/kitty
           ./modules/tmux
           ./modules/git
           ./modules/zellij
-          ./modules/hypr
-          ./modules/wezterm
           ./modules/npm
-          ./modules/yazi
         ] ++ extraImports;
 
       home.stateVersion = "26.05";
 
       home.file.".jdk/zulu25".source = pkgs.zulu25;
       home.file.".jdk/zulu".source = pkgs.zulu;
-
-      stylix = {
-        autoEnable = true;
-        targets.neovim.enable = false;
-        targets.waybar = {
-          addCss = false;
-        };
-      };
 
       home.packages =
         with pkgs; [
@@ -64,37 +62,7 @@ in {
             echo "$RESULT"
           '')
 
-          # Browsers
-          google-chrome
-          firefox
-          brave
-
-          discord
-
-          _1password-gui
-          _1password-cli
-
-          modrinth-app-rewrapped
-
-          # Audio
-          qjackctl
-          qpwgraph
-          bitwig-studio
-          spotify
-
-          # Wine
-          wineWow64Packages.yabridge
-          yabridge
-          yabridgectl
-          winetricks
-          bottles
-
-          # GPU
-          vulkan-tools
-          lact
-
           # Shell
-          kitty
           starship
 
           # Haskell
@@ -237,15 +205,6 @@ in {
               { name = "zsh-users/zsh-autosuggestions"; }
               { name = "chrissicool/zsh-256color"; }
             ];
-        };
-      };
-
-      fonts.fontconfig = {
-        enable = true;
-        defaultFonts = {
-          monospace = [ "PragmataPro Mono Liga" ];
-          sansSerif = [ "SFProDisplay Nerd Font" ];
-          serif = [ "New York Nerd Font" ];
         };
       };
     };

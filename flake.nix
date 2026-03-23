@@ -91,7 +91,7 @@
       isWsl = true;
     in nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit inputs user system nil hm isWsl ghc-version stylix; };
+      specialArgs = { inherit inputs user isWsl ghc-version; };
       modules = [
         nixos-wsl.nixosModules.default
         home-manager.nixosModules.home-manager
