@@ -5,10 +5,20 @@
 # NixOS-WSL specific options are documented on the NixOS-WSL repository:
 # https://github.com/nix-community/NixOS-WSL
 
-{ config, lib, pkgs, user, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  user,
+  inputs,
+  ...
+}:
 
 {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   environment.systemPackages = with pkgs; [
     git
@@ -28,7 +38,11 @@
   users.users.${user} = {
     isNormalUser = true;
     home = "/home/${user}";
-    extraGroups = [ "wheel" "networkmanager" "docker" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "docker"
+    ];
     shell = pkgs.zsh;
   };
 

@@ -12,9 +12,23 @@ rustPlatform.buildRustPackage rec {
     sha256 = "sha256-90mh8C52uD68K5o1LE22gkbL1gy6FyMJTiiN9oV/3DE=";
   };
 
-  nativeBuildInputs = [ installShellFiles pkg-config ];
+  nativeBuildInputs = [
+    installShellFiles
+    pkg-config
+  ];
 
-  buildInputs = [ libgit2 ] ++ lib.optionals stdenv.isDarwin (with pkgs.darwin.apple_sdk.frameworks; [ libiconv Security Foundation Cocoa ]);
+  buildInputs = [
+    libgit2
+  ]
+  ++ lib.optionals stdenv.isDarwin (
+    with pkgs.darwin.apple_sdk.frameworks;
+    [
+      libiconv
+      Security
+      Foundation
+      Cocoa
+    ]
+  );
 
   buildNoDefaultFeatures = true;
   # the "notify" feature is currently broken on darwin

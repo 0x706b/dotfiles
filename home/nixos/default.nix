@@ -1,56 +1,55 @@
 { pkgs }:
 {
-  home.packages =
-    with pkgs;
-    [ gitui
-      unetbootin
-      protonvpn-gui
-      qbittorrent
-      protontricks
-      gnomeExtensions.solaar-extension
-      solaar
-      awakened-poe-trade
-      gnupg
-      fzf
-      bat
-      unzip
-      fastfetch
-      eza
-      ripgrep
+  home.packages = with pkgs; [
+    gitui
+    unetbootin
+    protonvpn-gui
+    qbittorrent
+    protontricks
+    gnomeExtensions.solaar-extension
+    solaar
+    awakened-poe-trade
+    gnupg
+    fzf
+    bat
+    unzip
+    fastfetch
+    eza
+    ripgrep
 
-      modrinth-app-rewrapped
+    modrinth-app-rewrapped
 
-      # Browsers
-      google-chrome
-      firefox
-      brave
+    # Browsers
+    google-chrome
+    firefox
+    brave
 
-      discord
+    discord
 
-      # 1Password
-      _1password-gui
-      _1password-cli
+    # 1Password
+    _1password-gui
+    _1password-cli
 
-      # Audio
-      qjackctl
-      qpwgraph
-      bitwig-studio
-      spotify
+    # Audio
+    qjackctl
+    qpwgraph
+    bitwig-studio
+    spotify
 
-      # Wine
-      wineWow64Packages.yabridge
-      yabridge
-      yabridgectl
-      winetricks
-      bottles
+    # Wine
+    wineWow64Packages.yabridge
+    yabridge
+    yabridgectl
+    winetricks
+    bottles
 
-      # GPU
-      vulkan-tools
-      lact
+    # GPU
+    vulkan-tools
+    lact
 
-      # Shell
-      kitty
-    ];
+    # Shell
+    kitty
+  ];
 
   stylix = {
     autoEnable = true;
