@@ -39,6 +39,9 @@ local cmp_kinds = {
 }
 
 cmp.setup({
+  performance = {
+    fetching_timeout = 20000,
+  },
   snippet = {
     expand = function(args)
       vim.fn["vsnip#anonymous"](args.body)
@@ -55,6 +58,8 @@ cmp.setup({
     side_padding = 0,
   },
   mapping = cmp.mapping.preset.insert({
+    ["<A-y>"] = require("minuet").make_cmp_map(),
+
     ['<TAB>'] = cmp.mapping(function (fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -92,6 +97,7 @@ cmp.setup({
       { name = 'nvim_lsp' },
       -- { name = 'nvim_lsp_signature_help' },
       { name = 'vsnip' },
+      { name = "minuet" },
       { name = 'npm', keyword_length = 4 },
     },
     {

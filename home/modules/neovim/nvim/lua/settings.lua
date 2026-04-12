@@ -1,6 +1,10 @@
 local opt, opt_local, api, map = vim.opt, vim.opt_local, vim.api, vim.keymap.set
 
+-- makes <leader> == <space>
 vim.g.mapleader = " "
+
+-- enable buffer update on file change
+opt.autoread = true
 
 opt.termguicolors = true
 opt.showmode = false
@@ -44,4 +48,10 @@ api.nvim_create_autocmd("TextYankPost", {
   callback = function()
     vim.highlight.on_yank({ higroup = "IncSearch", timeout = 500 })
   end
+})
+
+-- Trigger checktime when certain events happen to refresh the buffer
+api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
+  command = "if mode() != 'c' | checktime | endif",
+  pattern = { "*" },
 })

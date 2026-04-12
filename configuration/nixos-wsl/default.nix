@@ -34,6 +34,12 @@
 
   nixpkgs.overlays = [
     inputs.neovim-nightly-overlay.overlays.default
+    (self: super: {
+      zjstatus = inputs.zjstatus.packages.${super.system}.default;
+    })
+    (self: super: {
+      llama-cpp = inputs.llama-cpp.packages.${super.system}.default;
+    })
     # (self: super: {
     #   zellij = super.zellij.overrideAttrs (oldAttrs: {
     #     src = pkgs.fetchFromGitHub {

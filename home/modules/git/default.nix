@@ -3,10 +3,7 @@
   programs.git = {
     enable = true;
     settings = {
-      core.sshCommand =
-        if isWsl == true
-        then "ssh.exe"
-        else "ssh -T";
+      core.sshCommand = "ssh -T";
       user = {
         name = "Peter Krol";
         email = "peter@peterkrol.com";
