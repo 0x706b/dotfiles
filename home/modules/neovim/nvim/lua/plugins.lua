@@ -35,7 +35,7 @@ require("lazy").setup({
     config = function()
       require("config.colorscheme.current_color").set_colorscheme("mellifluous")
     end,
-    enabled = false
+    enabled = false,
   },
 
   {
@@ -55,7 +55,7 @@ require("lazy").setup({
     config = function ()
       require("config.colorscheme.current_color").set_colorscheme("vague")
     end,
-    enabled = false,
+    enabled = true,
   },
 
   {
@@ -64,7 +64,7 @@ require("lazy").setup({
     config = function ()
       require("config.colorscheme.current_color").set_colorscheme("kanagawa")
     end,
-    enabled = true,
+    enabled = false,
   },
 
   { 'sainnhe/everforest', enabled = false },
@@ -113,24 +113,32 @@ require("lazy").setup({
     end
   },
 
+  -- {
+  --   "hrsh7th/nvim-cmp",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "neovim/nvim-lspconfig",
+  --     "hrsh7th/cmp-nvim-lsp",
+  --     "hrsh7th/cmp-buffer",
+  --     "hrsh7th/cmp-path",
+  --     "hrsh7th/cmp-cmdline",
+  --     "hrsh7th/cmp-vsnip",
+  --     "hrsh7th/vim-vsnip",
+  --     -- "hrsh7th/cmp-nvim-lsp-signature-help",
+  --     "onsails/lspkind.nvim",
+  --     "David-Kunz/cmp-npm",
+  --   },
+  --   config = function ()
+  --     require('config.cmp')
+  --   end
+  -- },
+
   {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "neovim/nvim-lspconfig",
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
-      "hrsh7th/cmp-vsnip",
-      "hrsh7th/vim-vsnip",
-      -- "hrsh7th/cmp-nvim-lsp-signature-help",
-      "onsails/lspkind.nvim",
-      "David-Kunz/cmp-npm",
-    },
-    config = function ()
-      require('config.cmp')
-    end
+    "saghen/blink.cmp",
+    version = "1.x",
+    config = function()
+      require('config.blink-cmp')
+    end,
   },
 
   -- {
@@ -398,5 +406,51 @@ require("lazy").setup({
     config = function ()
       -- require("config.clangd_extensions")
     end
+  },
+
+  -- OpenCode
+  {
+    "nickjvandyke/opencode.nvim",
+    version = "*", -- Latest stable release
+    dependencies = {
+      {
+        "folke/snacks.nvim",
+        opts = {
+          input = {}, -- Enhances `ask()`
+          picker = { -- Enhances `select()`
+            actions = {
+              opencode_send = function(...) return require("opencode").snacks_picker_send(...) end,
+            },
+            win = {
+              input = {
+                keys = {
+                  ["<a-a>"] = { "opencode_send", mode = { "n", "i" } },
+                },
+              },
+            },
+          },
+        },
+      }
+    },
+    config = function()
+      require("config.opencode")
+    end,
+  },
+
+  -- llama.nvim
+  -- {
+  --   "hmunye/llama.nvim",
+  --   dependencies = {},
+  --   config = function()
+  --     require("config.llama")
+  --   end
+  -- },
+
+  -- Minuet
+  {
+    'milanglacier/minuet-ai.nvim',
+    config = function()
+      require('config.minuet')
+    end,
   }
 })

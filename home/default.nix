@@ -23,6 +23,7 @@ in {
           ./modules/git
           ./modules/zellij
           ./modules/npm
+          ./modules/starship
         ] ++ extraImports;
 
       home.stateVersion = "26.05";
@@ -33,6 +34,9 @@ in {
       home.packages =
         with pkgs; [
           # Utilities
+          ollama
+          llama-cpp
+          lsof
           gitui
           unetbootin
           protonvpn-gui
@@ -50,6 +54,7 @@ in {
           ripgrep
           woff2
           gel
+          zjstatus
           (writeShellScriptBin "upfind" ''
             DIR=$PWD
 
@@ -79,8 +84,8 @@ in {
           # JavaScript
           nodejs_24
           yarn
-          nodePackages.pnpm
-          nodePackages.vscode-langservers-extracted
+          pnpm
+          vscode-langservers-extracted
 
           # Lua
           lua-language-server
@@ -124,6 +129,9 @@ in {
 
           # AI
           opencode
+
+          # Python
+          python3
         ];
 
       programs.zsh = {
@@ -166,7 +174,6 @@ in {
 
           export PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin:$(npm config get prefix)/bin:$HOME/go/bin/windows_amd64"
 
-          eval "$(starship init zsh)"
           if [ -n "''${NVIM_LISTEN_ADDRESS+x}" ]; then
             export COLORTERM="truecolor"
           fi

@@ -48,6 +48,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    zjstatus = {
+      url = "github:dj95/zjstatus";
+    };
+
+    llama-cpp = {
+      url = "github:ggml-org/llama.cpp";
+    };
+
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix/f8dad87c2cb956695d18c1f36360322d8a0b7d63";
   };
 

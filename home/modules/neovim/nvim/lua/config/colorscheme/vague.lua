@@ -5,8 +5,12 @@ M.initialized = false
 
 M.init = function()
   vague.setup({
+    italic = false,
     on_highlights = function(highlights, colors)
       highlights.StatusLine.bg = colors.bg
+      highlights.TabLineSel = {}
+      highlights.TabLineSel.fg = colors.fg
+      highlights.TabLineSel.bg = "#4c4c65"
     end
   })
 
