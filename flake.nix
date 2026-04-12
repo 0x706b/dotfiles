@@ -59,53 +59,87 @@
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix/f8dad87c2cb956695d18c1f36360322d8a0b7d63";
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, nil, nixos-wsl, stylix, ... }@inputs:
-  let
-    user = "peter";
-    hm = home-manager.lib.hm;
-    ghc-version = "912";
-  in
-  {
-    darwinConfigurations.MacBook-Pro =
+  outputs =
+    {
+      self,
+      darwin,
+      nixpkgs,
+      home-manager,
+      nil,
+      nixos-wsl,
+      stylix,
+      ...
+    }@inputs:
     let
-      system = "aarch64-darwin";
-      isWsl = false;
-    in darwin.lib.darwinSystem {
-      inherit system;
-      specialArgs = { inherit inputs user nil isWsl; };
-      modules = [
-        home-manager.darwinModules.home-manager
-        ./configuration/darwin
-        ./home/darwin
-      ];
-    };
+      user = "peter";
+      hm = home-manager.lib.hm;
+      ghc-version = "912";
+    in
+    {
+      darwinConfigurations.MacBook-Pro =
+        let
+          system = "aarch64-darwin";
+          isWsl = false;
+        in
+        darwin.lib.darwinSystem {
+          inherit system;
+          specialArgs = {
+            inherit
+              inputs
+              user
+              nil
+              isWsl
+              ;
+          };
+          modules = [
+            home-manager.darwinModules.home-manager
+            ./configuration/darwin
+            ./home/darwin
+          ];
+        };
 
-    nixosConfigurations.nixos =
-    let
-      isWsl = false;
-    in nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs user isWsl ghc-version; };
-      modules = [
-        ./configuration/nixos/configuration.nix
-        stylix.nixosModules.stylix
-        home-manager.nixosModules.home-manager
-        ./home
-      ];
-    };
+      nixosConfigurations.nixos =
+        let
+          isWsl = false;
+        in
+        nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit
+              inputs
+              user
+              isWsl
+              ghc-version
+              ;
+          };
+          modules = [
+            ./configuration/nixos/configuration.nix
+            stylix.nixosModules.stylix
+            home-manager.nixosModules.home-manager
+            ./home
+          ];
+        };
 
-    nixosConfigurations.nixos-wsl =
-    let
-      system = "x86_64-linux";
-      isWsl = true;
-    in nixpkgs.lib.nixosSystem {
-      inherit system;
-      specialArgs = { inherit inputs user isWsl ghc-version; };
-      modules = [
-        nixos-wsl.nixosModules.default
-        home-manager.nixosModules.home-manager
-        ./configuration/nixos-wsl
-        ./home
-      ];
+      nixosConfigurations.nixos-wsl =
+        let
+          system = "x86_64-linux";
+          isWsl = true;
+        in
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit
+              inputs
+              user
+              isWsl
+              ghc-version
+              ;
+          };
+          modules = [
+            nixos-wsl.nixosModules.default
+            home-manager.nixosModules.home-manager
+            ./configuration/nixos-wsl
+            ./home
+          ];
+        };
     };
-  };
 }

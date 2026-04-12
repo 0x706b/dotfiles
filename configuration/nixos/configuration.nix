@@ -2,7 +2,12 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 let
   mkNixpkgsStableOverlay = import ../../overlays/mkNixpkgsStableOverlay.nix;
@@ -10,21 +15,24 @@ let
   pragmata-pro = pkgs.callPackage ../../packages/pragmata-pro { inherit pkgs; };
 in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../modules/steam
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../modules/steam
+  ];
 
   nixpkgs.config.allowUnfree = true;
 
-  nixpkgs.overlays =
-    [ inputs.neovim-nightly-overlay.overlays.default
-      (mkNixpkgsStableOverlay inputs)
-      modrinth-app-rewrapped-overlay
-    ];
+  nixpkgs.overlays = [
+    inputs.neovim-nightly-overlay.overlays.default
+    (mkNixpkgsStableOverlay inputs)
+    modrinth-app-rewrapped-overlay
+  ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Use the limine EFI boot loader.
   boot.loader.limine = {
@@ -43,7 +51,10 @@ in
 
   networking.hostName = "nixos";
 
-  networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
+  networking.nameservers = [
+    "8.8.8.8"
+    "8.8.4.4"
+  ];
   networking.networkmanager.enable = true;
 
   networking.firewall.checkReversePath = false;
@@ -162,17 +173,41 @@ in
     };
   };
   security.pam.loginLimits = [
-    { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
-    { domain = "@audio"; item = "rtprio"; type = "-"; value = "99"; }
-    { domain = "@audio"; item = "nofile"; type = "soft"; value = "99999"; }
-    { domain = "@audio"; item = "nofile"; type = "hard"; value = "99999"; }
+    {
+      domain = "@audio";
+      item = "memlock";
+      type = "-";
+      value = "unlimited";
+    }
+    {
+      domain = "@audio";
+      item = "rtprio";
+      type = "-";
+      value = "99";
+    }
+    {
+      domain = "@audio";
+      item = "nofile";
+      type = "soft";
+      value = "99999";
+    }
+    {
+      domain = "@audio";
+      item = "nofile";
+      type = "hard";
+      value = "99999";
+    }
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.peter = {
     isNormalUser = true;
     description = "Peter";
-    extraGroups = [ "wheel" "audio" "networkmanager" ];
+    extraGroups = [
+      "wheel"
+      "audio"
+      "networkmanager"
+    ];
     packages = [ ];
   };
 
@@ -211,7 +246,8 @@ in
   programs.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+    portalPackage =
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   };
 
   # xdg.autostart.enable = true;
@@ -224,10 +260,17 @@ in
     ];
     config = {
       common = {
-        default = [ "gnome" "gtk" ];
+        default = [
+          "gnome"
+          "gtk"
+        ];
       };
       hyprland = {
-        default = [ "hyprland" "gnome" "gtk" ];
+        default = [
+          "hyprland"
+          "gnome"
+          "gtk"
+        ];
       };
     };
   };
@@ -285,4 +328,3 @@ in
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "25.11"; # Did you read the comment?
 }
-

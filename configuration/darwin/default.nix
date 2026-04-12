@@ -1,9 +1,15 @@
-{ config, pkgs, user, inputs, ... }:
+{
+  config,
+  pkgs,
+  user,
+  inputs,
+  ...
+}:
 
 {
-  environment.systemPackages =
-    [ pkgs.vim
-    ];
+  environment.systemPackages = [
+    pkgs.vim
+  ];
 
   environment.darwinConfig = "$HOME/dotfiles/flake.nix";
 
@@ -72,7 +78,10 @@
     package = pkgs.nixVersions.stable;
     settings = {
       allowed-users = [ user ];
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
     };
   };
 
@@ -93,17 +102,15 @@
     };
   };
 
-  system.activationScripts.applications.text = pkgs.lib.mkForce (
-    ''
-      echo "setting up ~/Applications..." >&2
-      rm -rf ~/Applications/Nix\ Apps
-      mkdir -p ~/Applications/Nix\ Apps
-      for app in $(find ${config.system.build.applications}/Applications -maxdepth 1 -type l); do
-        src="$(/usr/bin/stat -f%Y "$app")"
-        cp -r "$src" ~/Applications/Nix\ Apps
-      done
-    ''
-  );
+  system.activationScripts.applications.text = pkgs.lib.mkForce (''
+    echo "setting up ~/Applications..." >&2
+    rm -rf ~/Applications/Nix\ Apps
+    mkdir -p ~/Applications/Nix\ Apps
+    for app in $(find ${config.system.build.applications}/Applications -maxdepth 1 -type l); do
+      src="$(/usr/bin/stat -f%Y "$app")"
+      cp -r "$src" ~/Applications/Nix\ Apps
+    done
+  '');
 
   documentation = {
     enable = false;
