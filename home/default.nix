@@ -43,6 +43,7 @@ in
 
         home.packages = with pkgs; [
           # Utilities
+          nixfmt
           ollama
           llama-cpp
           lsof
