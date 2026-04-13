@@ -19,6 +19,11 @@ M.init = function()
       highlights.NeoTreeVertSplit.bg = ""
 
       highlights.NeoTreeWinSeparator = highlights.NeoTreeVertSplit
+
+      highlights.FloatBorder = {}
+      highlights.FloatBorder.bg = "NONE"
+      highlights.FloatBorder.sp = colors.comment
+      highlights.FloatBorder.fg = colors.comment
     end
   })
 
