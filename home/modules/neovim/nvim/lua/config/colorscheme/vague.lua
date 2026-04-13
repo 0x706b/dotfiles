@@ -8,9 +8,17 @@ M.init = function()
     italic = false,
     on_highlights = function(highlights, colors)
       highlights.StatusLine.bg = colors.bg
+
       highlights.TabLineSel = {}
       highlights.TabLineSel.fg = colors.fg
       highlights.TabLineSel.bg = "#4c4c65"
+
+      highlights.NeoTreeVertSplit = {}
+      highlights.NeoTreeVertSplit.sp = colors.line
+      highlights.NeoTreeVertSplit.fg = colors.line
+      highlights.NeoTreeVertSplit.bg = ""
+
+      highlights.NeoTreeWinSeparator = highlights.NeoTreeVertSplit
     end
   })
 
