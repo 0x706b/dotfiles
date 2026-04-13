@@ -34,8 +34,9 @@ local has_words_before = function()
 end
 
 require("blink.cmp").setup({
-  appearange = {
+  appearance = {
     nerd_font_variant = "mono",
+    use_nvim_cmp_as_default = true
   },
   sources = {
     default = {
@@ -79,9 +80,6 @@ require("blink.cmp").setup({
       end,
       'fallback',
     },
-  },
-  highlight = {
-    use_nvim_cmp_as_default = true
   },
   fuzzy = { implementation = 'prefer_rust_with_warning' },
   signature = {
@@ -127,6 +125,7 @@ require("blink.cmp").setup({
     trigger = { prefetch_on_insert = false },
     list = {
       selection = {
+        preselect = true,
         auto_insert = true,
       },
     },
