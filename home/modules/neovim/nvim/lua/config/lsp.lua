@@ -5,7 +5,7 @@ diagnostic.config({
   virtual_text = false,
   float = {
     border = "rounded",
-    scope = "cursor"
+    scope = "cursor",
   },
   signs = {
     text = {

@@ -125,7 +125,7 @@ require("blink.cmp").setup({
     trigger = { prefetch_on_insert = false },
     list = {
       selection = {
-        preselect = true,
+        preselect = false,
         auto_insert = true,
       },
     },

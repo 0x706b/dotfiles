@@ -25,6 +25,7 @@ in
 
   nixpkgs.overlays = [
     inputs.neovim-nightly-overlay.overlays.default
+    inputs.nix-vscode-extensions.overlays.default
     (mkNixpkgsStableOverlay inputs)
     modrinth-app-rewrapped-overlay
   ];

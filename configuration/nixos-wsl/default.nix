@@ -46,8 +46,11 @@
     shell = pkgs.zsh;
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   nixpkgs.overlays = [
     inputs.neovim-nightly-overlay.overlays.default
+    inputs.nix-vscode-extensions.overlays.default
     (self: super: {
       zjstatus = inputs.zjstatus.packages.${super.system}.default;
     })
