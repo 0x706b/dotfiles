@@ -7,7 +7,7 @@
     enable = true;
     withNodeJs = true;
     withPython3 = true;
-    waylandSupport = true;
+    # waylandSupport = true;
     package = pkgs.neovim;
   };
   home.file.".config/nvim" = {

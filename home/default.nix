@@ -33,6 +33,7 @@ in
           ./modules/zellij
           ./modules/npm
           ./modules/starship
+          ./modules/vscode
         ]
         ++ extraImports;
 
@@ -182,7 +183,7 @@ in
 
             zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
 
-            export PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin:$(npm config get prefix)/bin:$HOME/go/bin/windows_amd64"
+            export PATH="$(npm config get prefix)/bin:$PATH:$HOME/.gem/ruby/2.7.0/bin:$HOME/go/bin/windows_amd64"
 
             if [ -n "''${NVIM_LISTEN_ADDRESS+x}" ]; then
               export COLORTERM="truecolor"
