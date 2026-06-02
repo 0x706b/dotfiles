@@ -3,33 +3,33 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
 -- vague
-config.colors = {
-  foreground = "#cdcdcd",
-  background = "#141415",
-  cursor_bg = "#CBAA88",
-  selection_fg = "#cdcdcd",
-  selection_bg = "#252530",
-  ansi = {
-    "#252530",
-    "#d8647e",
-    "#7fa563",
-    "#f3be8c",
-    "#6e94b2",
-    "#bb9dbd",
-    "#aeaed1",
-    "#cdcdcd",
-  },
-  brights = {
-    "#606079",
-    "#e08398",
-    "#99b782",
-    "#f5cb96",
-    "#8ba9c1",
-    "#c9b1ca",
-    "#bebeda",
-    "#606079",
-  }
-}
+-- config.colors = {
+--   foreground = "#cdcdcd",
+--   background = "#141415",
+--   cursor_bg = "#CBAA88",
+--   selection_fg = "#cdcdcd",
+--   selection_bg = "#252530",
+--   ansi = {
+--     "#252530",
+--     "#d8647e",
+--     "#7fa563",
+--     "#f3be8c",
+--     "#6e94b2",
+--     "#bb9dbd",
+--     "#aeaed1",
+--     "#cdcdcd",
+--   },
+--   brights = {
+--     "#606079",
+--     "#e08398",
+--     "#99b782",
+--     "#f5cb96",
+--     "#8ba9c1",
+--     "#c9b1ca",
+--     "#bebeda",
+--     "#606079",
+--   }
+-- }
 
 -- kanagawa wave
 -- config.colors = {
@@ -89,33 +89,33 @@ config.colors = {
 -- }
 
 -- mellifluous dark
--- config.colors = {
---   foreground = "#C8C8C8",
---   background = "#151515",
---   cursor_bg = "#CBAA88",
---   selection_fg = "#C8C8C8",
---   selection_bg = "#323232",
---   ansi = {
---     "#1D1D1D",
---     "#D59192",
---     "#B3B393",
---     "#BFAF8E",
---     "#A8A1BE",
---     "#B99BB5",
---     "#A8A1BE",
---     "#5B5B5B",
---   },
---   brights = {
---     "#5B5B5B",
---     "#FFBCBD",
---     "#DFDFBE",
---     "#ECDBB9",
---     "#D4CDEB",
---     "#E6C6E1",
---     "#D4CDEB",
---     "#5B5B5B",
---   }
--- }
+config.colors = {
+  foreground = "#C8C8C8",
+  background = "#151515",
+  cursor_bg = "#CBAA88",
+  selection_fg = "#C8C8C8",
+  selection_bg = "#323232",
+  ansi = {
+    "#1D1D1D",
+    "#D59192",
+    "#B3B393",
+    "#BFAF8E",
+    "#A8A1BE",
+    "#B99BB5",
+    "#A8A1BE",
+    "#5B5B5B",
+  },
+  brights = {
+    "#5B5B5B",
+    "#FFBCBD",
+    "#DFDFBE",
+    "#ECDBB9",
+    "#D4CDEB",
+    "#E6C6E1",
+    "#D4CDEB",
+    "#5B5B5B",
+  }
+}
 
 -- mellifluous light
 -- config.colors = {

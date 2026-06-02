@@ -24,7 +24,8 @@ local kinds = {
   Event = '  ',
   Operator = '  ',
   TypeParameter = '  ',
-  Ollama = ' 󰚩 '
+  Ollama = ' 󰚩 ',
+  Copilot = ' 󰚩 '
 }
 
 local has_words_before = function()
@@ -41,7 +42,7 @@ require("blink.cmp").setup({
   sources = {
     default = {
       'lsp',
-      -- 'minuet',
+      'copilot',
       'path',
       'buffer'
     },
@@ -52,15 +53,21 @@ require("blink.cmp").setup({
         async = true,
         -- Should match minuet.config.request_timeout * 1000,
         -- since minuet.config.request_timeout is in seconds
-        timeout_ms = 3000,
+        timeout_ms = 15000,
         score_offset = 50, -- Gives minuet higher priority among suggestions
+      },
+      copilot = {
+        name = "copilot",
+        module = "blink-copilot",
+        score_offset = 100,
+        async = true,
       },
     },
   },
   keymap = {
     preset = "enter",
     -- Manually invoke minuet completion.
-    ['<A-y>'] = require('minuet').make_blink_map(),
+    -- ['<A-y>'] = require('minuet').make_blink_map(),
     ['<Tab>'] = {
       function(cmp)
         if cmp.is_menu_visible() then
@@ -102,7 +109,7 @@ require("blink.cmp").setup({
       min_width = 1,
       max_width = 100,
       max_height = 10,
-      border = nil, -- Defaults to `vim.o.winborder` on nvim 0.11+ or 'padded' when not defined/<=0.10
+      border = "padded", -- Defaults to `vim.o.winborder` on nvim 0.11+ or 'padded' when not defined/<=0.10
       winblend = 0,
       winhighlight = 'Normal:BlinkCmpSignatureHelp,FloatBorder:BlinkCmpSignatureHelpBorder',
       scrollbar = false, -- Note that the gutter will be disabled when border ~= 'none'
@@ -122,7 +129,18 @@ require("blink.cmp").setup({
     },
   },
   completion = {
-    trigger = { prefetch_on_insert = false },
+    trigger = {
+      prefetch_on_insert = true,
+      -- show_on_insert = true,
+      show_on_insert_on_trigger_character = true,
+      show_on_trigger_character = true,
+      show_on_keyword = true,
+      show_on_blocked_trigger_characters = { },
+      show_on_x_blocked_trigger_characters = { },
+      auto_brackets = {
+        enabled = true,
+      },
+    },
     list = {
       selection = {
         preselect = false,
@@ -134,8 +152,9 @@ require("blink.cmp").setup({
       auto_show_delay_ms = 500
     },
     menu = {
+      border = "padded",
       draw = {
-        padding = { 0, 1 },
+        padding = { 2, 2 },
         components = {
           kind_icon = {
             text = function(ctx)
