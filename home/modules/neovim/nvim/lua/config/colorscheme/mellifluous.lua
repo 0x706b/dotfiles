@@ -39,6 +39,7 @@ M.init = function()
         hl.set("NeoTreeEndOfBuffer", hl.get("EndOfBuffer"))
         hl.set("NeoTreeSeparator", hl.get("VertSplit"))
         hl.set("NeoTreeWinSeparator", hl.get("VertSplit"))
+        hl.set("BlinkCmpMenu", hl.get("Normal"))
       end
     }
   })

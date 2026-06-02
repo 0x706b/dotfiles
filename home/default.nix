@@ -16,6 +16,7 @@ let
         ./modules/hypr
         ./modules/kitty
         ./modules/wezterm
+        ./modules/vscode
       ];
 in
 {
@@ -33,7 +34,6 @@ in
           ./modules/zellij
           ./modules/npm
           ./modules/starship
-          ./modules/vscode
         ]
         ++ extraImports;
 
@@ -44,6 +44,7 @@ in
 
         home.packages = with pkgs; [
           # Utilities
+          jq
           nixfmt
           ollama
           llama-cpp
@@ -139,7 +140,7 @@ in
           gnumake
 
           # AI
-          opencode
+          # opencode
 
           # Python
           python3
@@ -189,7 +190,7 @@ in
               export COLORTERM="truecolor"
             fi
 
-            fastfetch
+            # fastfetch
 
             export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
           ''
@@ -244,6 +245,7 @@ in
               }
               { name = "zsh-users/zsh-autosuggestions"; }
               { name = "chrissicool/zsh-256color"; }
+              { name = "zsh-users/zsh-completions"; }
             ];
           };
         };

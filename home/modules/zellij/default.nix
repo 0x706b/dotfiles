@@ -58,7 +58,7 @@
     #   };
     # };
     settings = {
-      theme = "vague";
+      theme = "mellifluous";
 
       themes.vague = {
         bg = "#141415";

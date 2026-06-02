@@ -35,7 +35,7 @@ require("lazy").setup({
     config = function()
       require("config.colorscheme.current_color").set_colorscheme("mellifluous")
     end,
-    enabled = false,
+    enabled = true,
   },
 
   {
@@ -55,7 +55,7 @@ require("lazy").setup({
     config = function ()
       require("config.colorscheme.current_color").set_colorscheme("vague")
     end,
-    enabled = true,
+    enabled = false,
   },
 
   {
@@ -124,7 +124,7 @@ require("lazy").setup({
   --     "hrsh7th/cmp-cmdline",
   --     "hrsh7th/cmp-vsnip",
   --     "hrsh7th/vim-vsnip",
-  --     -- "hrsh7th/cmp-nvim-lsp-signature-help",
+  --     "hrsh7th/cmp-nvim-lsp-signature-help",
   --     "onsails/lspkind.nvim",
   --     "David-Kunz/cmp-npm",
   --   },
@@ -134,8 +134,17 @@ require("lazy").setup({
   -- },
 
   {
+    "copilotlsp-nvim/copilot-lsp",
+    config = function()
+      require("config.copilot-lsp")
+    end,
+  },
+  {
     "saghen/blink.cmp",
     version = "1.x",
+    dependencies = {
+      "fang2hou/blink-copilot"
+    },
     config = function()
       require('config.blink-cmp')
     end,
@@ -167,12 +176,12 @@ require("lazy").setup({
     end
   },
 
-  {
-    "ray-x/lsp_signature.nvim",
-    config = function()
-      require("config.lsp_signature")
-    end
-  },
+  -- {
+  --   "ray-x/lsp_signature.nvim",
+  --   config = function()
+  --     require("config.lsp_signature")
+  --   end
+  -- },
 
   {
     "mrcjkb/haskell-tools.nvim",
@@ -228,6 +237,7 @@ require("lazy").setup({
   -- 'othree/yajs.vim',
   -- 'Quramy/vim-js-pretty-template',
   -- 'MaxMEllon/vim-jsx-pretty',
+
   {
     'numToStr/Comment.nvim',
     config = function ()
@@ -280,11 +290,11 @@ require("lazy").setup({
 
   {
     'nvim-treesitter/nvim-treesitter',
-    branch = "master",
+    branch = "main",
     run = ':TSUpdate',
     dependencies = {
       'JoosepAlviste/nvim-ts-context-commentstring',
-      'nvim-treesitter/playground',
+      -- 'nvim-treesitter/playground',
     },
     config = function ()
       require('ts_context_commentstring').setup({
@@ -352,7 +362,7 @@ require("lazy").setup({
     dependencies = {
       -- "MunifTanjim/nui.nvim",
       -- "rcarriga/nvim-notify",
-      "hrsh7th/nvim-cmp",
+      -- "hrsh7th/nvim-cmp",
     },
     config = function()
       require("config.noice")
@@ -452,5 +462,5 @@ require("lazy").setup({
     config = function()
       require('config.minuet')
     end,
-  }
+  },
 })
