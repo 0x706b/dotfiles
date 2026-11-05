@@ -139,6 +139,8 @@ in
           python3
 
           ncdu
+
+          gitleaks
         ];
 
         programs.zsh = {
