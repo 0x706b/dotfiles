@@ -72,14 +72,53 @@ api.nvim_create_autocmd({ "InsertEnter" }, {
   end
 })
 
-vim.lsp.config("tsc", {
-  cmd = { "./node_modules/.bin/tsc", "--lsp", "--stdio" },
-  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-  root_dir = vim.fs.root(0, { "tsconfig.json", "package.json", ".git" }),
-  capabilities = require('blink.cmp').get_lsp_capabilities(),
-})
+-- Resolve TypeScript from each buffer, walking up through workspace packages so
+-- monorepos can use their own installed versions. Missing installations use
+-- the classic server rather than assuming that the native LSP is available.
+local function typescript_package(dir)
+  while dir and dir ~= "" do
+    local package_dir = vim.fs.joinpath(dir, "node_modules", "@typescript/native")
+    local package_file = vim.fs.joinpath(package_dir, "package.json")
+    local ok, lines = pcall(vim.fn.readfile, package_file)
+    if ok then
+      local decoded, package = pcall(vim.json.decode, table.concat(lines, "\n"))
+      if decoded and type(package) == "table" then
+        return package_dir, tonumber(tostring(package.version):match("^(%d+)"))
+      end
+      return nil, nil
+    end
+    local parent = vim.fs.dirname(dir)
+    if parent == dir then break end
+    dir = parent
+  end
+end
 
-vim.lsp.enable("tsc")
+local function typescript_root(bufnr, on_dir, native)
+  local package_dir, major = typescript_package(vim.fs.dirname(api.nvim_buf_get_name(bufnr)))
+  if (major ~= nil and major >= 7) ~= native then return end
+  local root = vim.fs.root(bufnr, { "tsconfig.json", "jsconfig.json", "package.json", ".git" })
+  if root and native then
+    local package_root = vim.fs.dirname(vim.fs.dirname(package_dir))
+    if vim.startswith(package_root, root .. "/") then root = package_root end
+  end
+  if root then on_dir(root) end
+end
+
+local capabilities = require('blink.cmp').get_lsp_capabilities()
+vim.lsp.config("tsc", {
+  cmd = function(dispatchers, config)
+    local package_dir = typescript_package(config.root_dir)
+    return vim.lsp.rpc.start({ vim.fs.joinpath(package_dir, "bin", "tsc"), "--lsp", "--stdio" }, dispatchers)
+  end,
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+  root_dir = function(bufnr, on_dir) typescript_root(bufnr, on_dir, true) end,
+  capabilities = capabilities,
+})
+vim.lsp.config("ts_ls", {
+  root_dir = function(bufnr, on_dir) typescript_root(bufnr, on_dir, false) end,
+  capabilities = capabilities,
+})
+vim.lsp.enable({ "tsc", "ts_ls" })
 
 -- map.set("n", "K", lsp.buf.hover, { buffer = true })
 

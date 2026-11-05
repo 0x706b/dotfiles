@@ -386,6 +386,7 @@ require("lazy").setup({
 
   {
     "petertriho/nvim-scrollbar",
+    version = "v1",
     config = function ()
       require("config.nvim-scrollbar")
     end

@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     tree-sitter
+    typescript-language-server
   ];
   programs.neovim = {
     enable = true;
