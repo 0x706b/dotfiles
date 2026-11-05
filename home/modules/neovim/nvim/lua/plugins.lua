@@ -98,13 +98,13 @@ require("lazy").setup({
     end
   },
 
-  {
-    "pmizio/typescript-tools.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    config = function ()
-      require('config.typescript-tools')
-    end
-  },
+  -- {
+  --   "pmizio/typescript-tools.nvim",
+  --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  --   config = function ()
+  --     require('config.typescript-tools')
+  --   end
+  -- },
 
   {
     "windwp/nvim-ts-autotag",

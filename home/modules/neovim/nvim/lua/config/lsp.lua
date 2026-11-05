@@ -72,6 +72,15 @@ api.nvim_create_autocmd({ "InsertEnter" }, {
   end
 })
 
+vim.lsp.config("tsc", {
+  cmd = { "./node_modules/.bin/tsc", "--lsp", "--stdio" },
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+  root_dir = vim.fs.root(0, { "tsconfig.json", "package.json", ".git" }),
+  capabilities = require('blink.cmp').get_lsp_capabilities(),
+})
+
+vim.lsp.enable("tsc")
+
 -- map.set("n", "K", lsp.buf.hover, { buffer = true })
 
 vim.lsp.config("eslint", {

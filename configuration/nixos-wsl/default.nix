@@ -14,6 +14,10 @@
   ...
 }:
 
+let
+  nodejs-24-overlay = import ../../overlays/nodejs-24.22.1.nix;
+  nodejs-26-overlay = import ../../overlays/nodejs-26.12.1.nix;
+in
 {
   nix.settings.experimental-features = [
     "nix-command"
@@ -44,12 +48,17 @@
       "docker"
     ];
     shell = pkgs.zsh;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHUqHpUK6HSXLqY5kPaoKTAg7znT6aw8lFC2LKfeJY26 peter@peterkrol.com"
+    ];
   };
 
   nixpkgs.config.allowUnfree = true;
 
   nixpkgs.overlays = [
-    inputs.neovim-nightly-overlay.overlays.default
+    # inputs.neovim-nightly-overlay.overlays.default
+    nodejs-24-overlay
+    nodejs-26-overlay
     inputs.nix-vscode-extensions.overlays.default
     (self: super: {
       zjstatus = inputs.zjstatus.packages.${super.system}.default;
@@ -85,6 +94,16 @@
   wsl.wslConf.automount.root = "/mnt";
   wsl.wslConf.interop.appendWindowsPath = true;
   wsl.wslConf.network.generateHosts = false;
+
+  services.openssh = {
+    enable = true;
+    openFirewall = true;
+    ports = [ 22 ];
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+    };
+  };
 
   virtualisation.docker = {
     enable = true;

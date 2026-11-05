@@ -13,6 +13,8 @@ let
   mkNixpkgsStableOverlay = import ../../overlays/mkNixpkgsStableOverlay.nix;
   modrinth-app-rewrapped-overlay = import ../../overlays/modrinth-app-rewrapped.nix;
   pragmata-pro = pkgs.callPackage ../../packages/pragmata-pro { inherit pkgs; };
+  nodejs-24-overlay = import ../../overlays/nodejs-24.22.1.nix;
+  nodejs-26-overlay = import ../../overlays/nodejs-26.12.1.nix;
 in
 {
   imports = [
@@ -24,7 +26,9 @@ in
   nixpkgs.config.allowUnfree = true;
 
   nixpkgs.overlays = [
-    inputs.neovim-nightly-overlay.overlays.default
+    # inputs.neovim-nightly-overlay.overlays.default
+    nodejs-24-overlay
+    nodejs-26-overlay
     inputs.nix-vscode-extensions.overlays.default
     (mkNixpkgsStableOverlay inputs)
     modrinth-app-rewrapped-overlay

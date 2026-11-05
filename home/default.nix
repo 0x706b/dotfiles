@@ -50,13 +50,6 @@ in
           llama-cpp
           lsof
           gitui
-          unetbootin
-          protonvpn-gui
-          qbittorrent
-          protontricks
-          gnomeExtensions.solaar-extension
-          solaar
-          awakened-poe-trade
           gnupg
           fzf
           bat
@@ -106,14 +99,14 @@ in
           ruby
 
           # Kubernetes
-          kubectl
-          minikube
+          # kubectl
+          # minikube
 
           # Docker
           docker
 
           # Java
-          # zulu
+          zulu25
 
           # Scala
           ammonite
@@ -131,7 +124,7 @@ in
           cargo
 
           # Go
-          go
+          go_1_27
           gel
 
           # C++
@@ -144,6 +137,8 @@ in
 
           # Python
           python3
+
+          ncdu
         ];
 
         programs.zsh = {
