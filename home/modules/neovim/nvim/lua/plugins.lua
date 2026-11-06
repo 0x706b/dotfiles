@@ -141,6 +141,7 @@ require("lazy").setup({
   },
   {
     "saghen/blink.cmp",
+    enabled = true,
     version = "1.x",
     dependencies = {
       "fang2hou/blink-copilot"
