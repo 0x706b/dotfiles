@@ -72,6 +72,17 @@ api.nvim_create_autocmd({ "InsertEnter" }, {
   end
 })
 
+api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+    -- Check if the server supports inlay hints (Neovim 0.10+)
+    if client and client.server_capabilities.inlayHintProvider then
+      vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+    end
+  end,
+})
+
 -- Resolve TypeScript from each buffer, walking up through workspace packages so
 -- monorepos can use their own installed versions. Missing installations use
 -- the classic server rather than assuming that the native LSP is available.

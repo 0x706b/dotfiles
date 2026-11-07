@@ -1,94 +1,167 @@
 local fn = vim.fn
 
 require("lazy").setup({
-  -- Themes
-  { '0x706b/zenburn.nvim', enabled = false },
-  { '0x706b/crumbling.nvim', enabled = false },
-  { '0x706b/parchment.nvim', enabled = false },
-  { 'mcchrish/zenbones.nvim', enabled = false },
-  { 'sainnhe/sonokai', enabled = false },
-  { 'lifepillar/vim-solarized8', enabled = false },
-  { 'Mofiqul/dracula.nvim', enabled = false },
-  { 'ellisonleao/gruvbox.nvim', enabled = false },
-  { "projekt0n/github-nvim-theme", enabled = false },
+  -- AI
 
   {
-    '0x706b/monotone.nvim',
-    priority = 9999,
-    enabled = false,
+    "copilotlsp-nvim/copilot-lsp",
     config = function()
-      require("config.colorscheme.current_color").set_colorscheme("monotone")
+      require("config.copilot-lsp")
     end,
-  },
-  {
-    "catppuccin/nvim",
-    priority = 9999,
-    config = function()
-      require("config.colorscheme.current_color").set_colorscheme("catppuccin")
-    end,
-    enabled = false
   },
 
   {
-    'ramojus/mellifluous.nvim',
-    priority = 9999,
+    'milanglacier/minuet-ai.nvim',
     config = function()
-      require("config.colorscheme.current_color").set_colorscheme("mellifluous")
+      require('config.minuet')
     end,
+  },
+
+  -- Completion
+
+  {
+    "saghen/blink.cmp",
     enabled = true,
+    branch = "main",
+    build = function()
+      require('blink.cmp').build():pwait()
+    end,
+    dependencies = {
+      "saghen/blink.lib",
+      "fang2hou/blink-copilot"
+    },
+    config = function()
+      require('config.blink-cmp')
+    end,
+  },
+
+  -- Editing
+
+  {
+    'jdhao/better-escape.vim',
+    config = function ()
+      vim.g.better_escape_interval = 300
+      vim.g.better_escape_shortcut = { 'jj' }
+    end
   },
 
   {
-    'baliestri/aura-theme',
+    'numToStr/Comment.nvim',
+    config = function ()
+      require("config.comment")
+    end
+  },
+
+  'tpope/vim-surround',
+
+  {
+    'windwp/nvim-autopairs',
+    config = function ()
+      require("config.nvim-autopairs")
+    end
+  },
+
+  -- File navigation
+
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
     lazy = false,
-    priority = 9999,
-    config = function(plugin)
-      vim.opt.rtp:append(plugin.dir .. "/packages/neovim")
-      require("config.colorscheme.current_color").set_colorscheme("aura")
-    end,
-    enabled = false,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    },
+    config = function()
+      require('config.neotree')
+    end
   },
 
   {
-    "vague2k/vague.nvim",
-    priority = 9999,
+    'nvim-telescope/telescope.nvim',
+    tag = 'v0.2.1',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require("config.telescope")
+    end
+  },
+
+  -- Git
+
+  {
+    'lewis6991/gitsigns.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim'
+    },
     config = function ()
-      require("config.colorscheme.current_color").set_colorscheme("vague")
-    end,
-    enabled = false,
+      require'config.gitsigns'
+    end
+  },
+
+  'tpope/vim-fugitive',
+
+  -- Languages
+
+  "edgedb/edgedb-vim",
+
+  {
+    "mrcjkb/haskell-tools.nvim",
+    tag = '3.1.9',
+    config = function()
+      require("config.haskell-tools")
+    end
   },
 
   {
-    "rebelot/kanagawa.nvim",
-    priority = 9999,
-    config = function ()
-      require("config.colorscheme.current_color").set_colorscheme("kanagawa")
-    end,
-    enabled = false,
-  },
-
-  { 'sainnhe/everforest', enabled = false },
-  {
-    'AlexvZyl/nordic.nvim',
-    lazy = false,
-    priority = 1000,
-    enabled = false
+    'mrcjkb/rustaceanvim',
+    version = '^5', -- Recommended
+    lazy = false, -- This plugin is already lazy
   },
 
   {
-    'glepnir/galaxyline.nvim',
-    config = function ()
-      require("config.galaxyline")
-    end,
-    dependencies =
-      {
-        { 'nvim-tree/nvim-web-devicons', opt = true },
-      }
+    "p00f/clangd_extensions.nvim",
   },
 
   'purescript-contrib/purescript-vim',
 
+  {
+    "scalameta/nvim-metals",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    ft = { "scala", "sbt", "java" },
+    config = function()
+      require("config.nvim-metals")
+    end
+  },
+
   -- LSP
+
+  {
+    "antosha417/nvim-lsp-file-operations",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "0x706b/neo-tree.nvim"
+    },
+    config = function()
+      require("lsp-file-operations").setup()
+    end,
+  },
+
+  {
+    "aznhe21/actions-preview.nvim",
+    config = function ()
+      require("config.actions-preview")
+    end
+  },
+
+  {
+    "elentok/format-on-save.nvim",
+    config = function()
+      require("config.format-on-save")
+    end
+  },
 
   {
     'neovim/nvim-lspconfig',
@@ -107,187 +180,112 @@ require("lazy").setup({
   -- },
 
   {
-    "windwp/nvim-ts-autotag",
-    config = function ()
-      require('config.nvim-ts-autotag')
-    end
-  },
-
-  -- {
-  --   "hrsh7th/nvim-cmp",
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     "neovim/nvim-lspconfig",
-  --     "hrsh7th/cmp-nvim-lsp",
-  --     "hrsh7th/cmp-buffer",
-  --     "hrsh7th/cmp-path",
-  --     "hrsh7th/cmp-cmdline",
-  --     "hrsh7th/cmp-vsnip",
-  --     "hrsh7th/vim-vsnip",
-  --     "hrsh7th/cmp-nvim-lsp-signature-help",
-  --     "onsails/lspkind.nvim",
-  --     "David-Kunz/cmp-npm",
-  --   },
-  --   config = function ()
-  --     require('config.cmp')
-  --   end
-  -- },
-
-  {
-    "copilotlsp-nvim/copilot-lsp",
-    config = function()
-      require("config.copilot-lsp")
-    end,
-  },
-  {
-    "saghen/blink.cmp",
-    enabled = true,
-    version = "1.x",
-    dependencies = {
-      "fang2hou/blink-copilot"
-    },
-    config = function()
-      require('config.blink-cmp')
-    end,
-  },
-
-  -- {
-  --   "nvimdev/lspsaga.nvim",
-  --   config = function()
-  --     require('config.lspsaga')
-  --   end,
-  --   dependencies = {
-  --     "nvim-lspconfig",
-  --     'nvim-treesitter/nvim-treesitter',
-  --     'nvim-tree/nvim-web-devicons',
-  --   }
-  -- },
-
-  {
-    "aznhe21/actions-preview.nvim",
-    config = function ()
-      require("config.actions-preview")
-    end
-  },
-
-  {
     "smjonas/inc-rename.nvim",
     config = function ()
       require("config.inc-rename")
     end
   },
 
-  -- {
-  --   "ray-x/lsp_signature.nvim",
-  --   config = function()
-  --     require("config.lsp_signature")
-  --   end
-  -- },
+  -- Themes
+
+  { '0x706b/crumbling.nvim', enabled = false },
 
   {
-    "mrcjkb/haskell-tools.nvim",
-    tag = '3.1.9',
+    '0x706b/monotone.nvim',
+    priority = 9999,
+    enabled = false,
     config = function()
-      require("config.haskell-tools")
-    end
+      require("config.colorscheme.current_color").set_colorscheme("monotone")
+    end,
   },
 
-  -- Neotree
+  { '0x706b/parchment.nvim', enabled = false },
+
+  { '0x706b/zenburn.nvim', enabled = false },
 
   {
-    "0x706b/neo-tree.nvim",
-    branch = "feat/allow-win-options-override",
+    'AlexvZyl/nordic.nvim',
     lazy = false,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
-      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-    },
-    config = function()
-      require('config.neotree')
-    end
-  },
-
-  -- Telescope
-
-  {
-    'nvim-telescope/telescope.nvim',
-    tag = 'v0.2.1',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      require("config.telescope")
-    end
+    priority = 1000,
+    enabled = false
   },
 
   {
-    "elentok/format-on-save.nvim",
-    config = function()
-      require("config.format-on-save")
-    end
+    'baliestri/aura-theme',
+    lazy = false,
+    priority = 9999,
+    config = function(plugin)
+      vim.opt.rtp:append(plugin.dir .. "/packages/neovim")
+      require("config.colorscheme.current_color").set_colorscheme("aura")
+    end,
+    enabled = false,
   },
 
-  -- Typescript
+  {
+    "catppuccin/nvim",
+    priority = 9999,
+    config = function()
+      require("config.colorscheme.current_color").set_colorscheme("catppuccin")
+    end,
+    enabled = false
+  },
 
-  -- {
-  --   'HerringtonDarkholme/yats.vim',
-  --   config = function ()
-  --     vim.g.yats_host_keyword = 0
-  --   end
-  -- },
-  -- 'othree/yajs.vim',
-  -- 'Quramy/vim-js-pretty-template',
-  -- 'MaxMEllon/vim-jsx-pretty',
+  { 'ellisonleao/gruvbox.nvim', enabled = false },
+
+  { 'lifepillar/vim-solarized8', enabled = false },
+
+  { 'mcchrish/zenbones.nvim', enabled = false },
+
+  { 'Mofiqul/dracula.nvim', enabled = false },
+
+  { "projekt0n/github-nvim-theme", enabled = false },
 
   {
-    'numToStr/Comment.nvim',
+    'ramojus/mellifluous.nvim',
+    priority = 9999,
+    config = function()
+      require("config.colorscheme.current_color").set_colorscheme("mellifluous")
+    end,
+    enabled = true,
+  },
+
+  {
+    "rebelot/kanagawa.nvim",
+    priority = 9999,
     config = function ()
-      require("config.comment")
-    end
-  },
-  'ryanoasis/vim-devicons',
-  'tpope/vim-surround',
-  'tpope/vim-fugitive',
-
-  {
-    'jdhao/better-escape.vim',
-    config = function ()
-      vim.g.better_escape_interval = 300
-      vim.g.better_escape_shortcut = { 'jj' }
-    end
-  },
-
-  'nvim-tree/nvim-web-devicons',
-
-  {
-    'romgrk/barbar.nvim',
-    dependencies = 'nvim-tree/nvim-web-devicons',
-    config = function()
-      require'config.barbar'
-    end
-  },
-
-  {
-    'lukas-reineke/indent-blankline.nvim',
-    commit = "e7a4442e055ec953311e77791546238d1eaae507",
-    config = function()
-      require'config.indent-blankline'
-    end
-  },
-
-  {
-    'lewis6991/gitsigns.nvim',
-    dependencies = {
-      'nvim-lua/plenary.nvim'
-    },
-    config = function ()
-      require'config.gitsigns'
-    end
+      require("config.colorscheme.current_color").set_colorscheme("kanagawa")
+    end,
+    enabled = false,
   },
 
   'rktjmp/lush.nvim',
 
+  { 'sainnhe/everforest', enabled = false },
+
+  { 'sainnhe/sonokai', enabled = false },
+
+  {
+    "vague2k/vague.nvim",
+    priority = 9999,
+    config = function ()
+      require("config.colorscheme.current_color").set_colorscheme("vague")
+    end,
+    enabled = false,
+  },
+
   -- Treesitter
+
+  -- {
+  --   'luckasRanarison/tailwind-tools.nvim',
+  --   name = "tailwind-tools",
+  --   build = ":UpdateRemotePlugins",
+  --   dependencies = {
+  --     "nvim-treesitter/nvim-treesitter",
+  --     "nvim-telescope/telescope.nvim", -- optional
+  --     "neovim/nvim-lspconfig", -- optional
+  --   },
+  --   opts = {} -- your configuration
+  -- },
 
   {
     'nvim-treesitter/nvim-treesitter',
@@ -306,29 +304,53 @@ require("lazy").setup({
   },
 
   {
+    "windwp/nvim-ts-autotag",
+    config = function ()
+      require('config.nvim-ts-autotag')
+    end
+  },
+
+  {
     'windwp/nvim-ts-autotag',
     config = function ()
       require("config.nvim-ts-autotag")
     end
   },
 
+  -- UI
+
   {
-    'windwp/nvim-autopairs',
-    config = function ()
-      require("config.nvim-autopairs")
+    "folke/drop.nvim"
+  },
+
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      -- "MunifTanjim/nui.nvim",
+      -- "rcarriga/nvim-notify",
+    },
+    config = function()
+      require("config.noice")
     end
   },
 
-  "edgedb/edgedb-vim",
+  {
+    'glepnir/galaxyline.nvim',
+    config = function ()
+      require("config.galaxyline")
+    end,
+    dependencies =
+      {
+        { 'nvim-tree/nvim-web-devicons', opt = true },
+      }
+  },
 
   {
-    "scalameta/nvim-metals",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    ft = { "scala", "sbt", "java" },
+    'lukas-reineke/indent-blankline.nvim',
+    commit = "e7a4442e055ec953311e77791546238d1eaae507",
     config = function()
-      require("config.nvim-metals")
+      require'config.indent-blankline'
     end
   },
 
@@ -340,50 +362,13 @@ require("lazy").setup({
   },
 
   {
-    'mrcjkb/rustaceanvim',
-    version = '^5', -- Recommended
-    lazy = false, -- This plugin is already lazy
-  },
-
-  -- {
-  --   'luckasRanarison/tailwind-tools.nvim',
-  --   name = "tailwind-tools",
-  --   build = ":UpdateRemotePlugins",
-  --   dependencies = {
-  --     "nvim-treesitter/nvim-treesitter",
-  --     "nvim-telescope/telescope.nvim", -- optional
-  --     "neovim/nvim-lspconfig", -- optional
-  --   },
-  --   opts = {} -- your configuration
-  -- },
-
-  {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      -- "MunifTanjim/nui.nvim",
-      -- "rcarriga/nvim-notify",
-      -- "hrsh7th/nvim-cmp",
-    },
-    config = function()
-      require("config.noice")
+    "norcalli/nvim-colorizer.lua",
+    config = function ()
+      require("config.nvim-colorizer")
     end
   },
 
-  {
-    "folke/drop.nvim"
-  },
-
-  {
-    "antosha417/nvim-lsp-file-operations",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "0x706b/neo-tree.nvim"
-    },
-    config = function()
-      require("lsp-file-operations").setup()
-    end,
-  },
+  'nvim-tree/nvim-web-devicons',
 
   {
     "petertriho/nvim-scrollbar",
@@ -394,11 +379,14 @@ require("lazy").setup({
   },
 
   {
-    "norcalli/nvim-colorizer.lua",
-    config = function ()
-      require("config.nvim-colorizer")
+    'romgrk/barbar.nvim',
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = function()
+      require'config.barbar'
     end
   },
+
+  'ryanoasis/vim-devicons',
 
   {
     "swaits/zellij-nav.nvim",
@@ -411,58 +399,5 @@ require("lazy").setup({
       { "<c-l>", "<cmd>ZellijNavigateRightTab<cr>", { silent = true, desc = "navigate right or tab" } },
     },
     opts = {},
-  },
-
-  {
-    "p00f/clangd_extensions.nvim",
-    config = function ()
-      -- require("config.clangd_extensions")
-    end
-  },
-
-  -- OpenCode
-  {
-    "nickjvandyke/opencode.nvim",
-    version = "*", -- Latest stable release
-    dependencies = {
-      {
-        "folke/snacks.nvim",
-        opts = {
-          input = {}, -- Enhances `ask()`
-          picker = { -- Enhances `select()`
-            actions = {
-              opencode_send = function(...) return require("opencode").snacks_picker_send(...) end,
-            },
-            win = {
-              input = {
-                keys = {
-                  ["<a-a>"] = { "opencode_send", mode = { "n", "i" } },
-                },
-              },
-            },
-          },
-        },
-      }
-    },
-    config = function()
-      require("config.opencode")
-    end,
-  },
-
-  -- llama.nvim
-  -- {
-  --   "hmunye/llama.nvim",
-  --   dependencies = {},
-  --   config = function()
-  --     require("config.llama")
-  --   end
-  -- },
-
-  -- Minuet
-  {
-    'milanglacier/minuet-ai.nvim',
-    config = function()
-      require('config.minuet')
-    end,
   },
 })

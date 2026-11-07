@@ -1,39 +1,3 @@
-local kinds = {
-  Text = '  ',
-  Method = '  ',
-  Function = '  ',
-  Constructor = '  ',
-  Field = '  ',
-  Variable = '  ',
-  Class = '  ',
-  Interface = '  ',
-  Module = '  ',
-  Property = '  ',
-  Unit = '  ',
-  Value = '  ',
-  Enum = '  ',
-  Keyword = '  ',
-  Snippet = '  ',
-  Color = '  ',
-  File = '  ',
-  Reference = '  ',
-  Folder = '  ',
-  EnumMember = '  ',
-  Constant = '  ',
-  Struct = '  ',
-  Event = '  ',
-  Operator = '  ',
-  TypeParameter = '  ',
-  Ollama = ' 󰚩 ',
-  Copilot = ' 󰚩 '
-}
-
-local has_words_before = function()
-  unpack = unpack or table.unpack
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
 require("blink.cmp").setup({
   appearance = {
     nerd_font_variant = "mono",
@@ -137,6 +101,8 @@ require("blink.cmp").setup({
       show_on_keyword = true,
       show_on_blocked_trigger_characters = { },
       show_on_x_blocked_trigger_characters = { },
+    },
+    accept = {
       auto_brackets = {
         enabled = true,
       },
@@ -157,33 +123,11 @@ require("blink.cmp").setup({
         padding = { 2, 2 },
         components = {
           kind_icon = {
-            text = function(ctx)
-              local icon = ctx.kind_icon
-              if vim.tbl_contains({ "Path" }, ctx.source_name) then
-                  local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
-                  if dev_icon then
-                      icon = dev_icon
-                  end
-              else
-                  icon = kinds[ctx.kind] or ctx.kind
-              end
-
-              return icon .. ctx.icon_gap
-            end,
-
+            text = get_kind_icon,
             -- Optionally, use the highlight groups from nvim-web-devicons
             -- You can also add the same function for `kind.highlight` if you want to
             -- keep the highlight groups in sync with the icons.
-            highlight = function(ctx)
-              local hl = ctx.kind_hl
-              if vim.tbl_contains({ "Path" }, ctx.source_name) then
-                local dev_icon, dev_hl = require("nvim-web-devicons").get_icon(ctx.label)
-                if dev_icon then
-                  hl = dev_hl
-                end
-              end
-              return hl
-            end,
+            highlight = get_kind_highlight,
           }
         }
       }
@@ -191,3 +135,64 @@ require("blink.cmp").setup({
   },
 })
 
+local kinds = {
+  Text = '  ',
+  Method = '  ',
+  Function = '  ',
+  Constructor = '  ',
+  Field = '  ',
+  Variable = '  ',
+  Class = '  ',
+  Interface = '  ',
+  Module = '  ',
+  Property = '  ',
+  Unit = '  ',
+  Value = '  ',
+  Enum = '  ',
+  Keyword = '  ',
+  Snippet = '  ',
+  Color = '  ',
+  File = '  ',
+  Reference = '  ',
+  Folder = '  ',
+  EnumMember = '  ',
+  Constant = '  ',
+  Struct = '  ',
+  Event = '  ',
+  Operator = '  ',
+  TypeParameter = '  ',
+  Ollama = ' 󰚩 ',
+  Copilot = ' 󰚩 '
+}
+
+local function has_words_before()
+  unpack = unpack or table.unpack
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+local function get_kind_icon(ctx)
+  local icon = ctx.kind_icon
+  if vim.tbl_contains({ "Path" }, ctx.source_name) then
+      local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
+      if dev_icon then
+          icon = dev_icon
+      end
+  else
+      icon = kinds[ctx.kind] or ctx.kind
+  end
+
+  return icon .. ctx.icon_gap
+end
+
+local function get_kind_highlight(ctx)
+  local hl = ctx.kind_hl
+  if vim.tbl_contains({ "Path" }, ctx.source_name) then
+      local _, dev_hl = require("nvim-web-devicons").get_icon(ctx.label)
+      if dev_hl then
+          hl = dev_hl
+      end
+  end
+
+  return hl
+end

@@ -137,6 +137,7 @@ in
 
           # Python
           python3
+          ruff
 
           ncdu
 
